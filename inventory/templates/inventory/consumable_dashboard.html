@@ -2,6 +2,7 @@
 
 {% block content %}
 
+
 	<div class="row">
 		<div class="col-md-10 col-12 mx-auto mt-5">
 			<div class="d-flex justify-content-end">
@@ -15,8 +16,6 @@
 						<th scope="col">Item</th>
 						<th scope="col">Qty</th>
 						<th scope="col">Category</th>
-						<th scope="col">Certification</th>
-						<th scope="col">Recertification</th>
 						<th scope="col"></th>
 						<th scope="col"></th>
 					</tr>
@@ -32,36 +31,29 @@
 						<td></td>
 					</tr>
 					{% endif %}
-
+                 
 					{% for item in items %}
+                    
 					<tr>
-				
+                        {% if item.consumable %}
 						<td>{{ item.name }}</td>
-						{% if item.consumable %}
+						
 						{% if item.id in low_inventory_ids %}
 							<td class="text-danger">{{ item.quantity }}</td>
 						{% else %}
 							<td class="text-success">{{ item.quantity }}</td>
 						{% endif %}
-						{% else %}
-						<td class="text-success">1</td>
-						{% endif %}
+
 						<td>{{ item.category.name }}</td>
-						{% if item.certification_date %}
-						<td>{{ item.certification_date }}</td>
-						{% else %}
-						<td>-</td>
-						{% endif %}
-						{% if item.recertification_date %}
-						<td>{{ item.recertification_date }}</td>
-						{% else %}
-						<td>-</td>
-						{% endif %}
+
+                      
 
 						<td><a href="{% url 'edit-item' item.id %}" class="btn btn-outline-secondary">Edit</a></td>
 						<td><a href="{% url 'delete-item' item.id %}" class="btn btn-secondary">Delete</a></td>
 					</tr>
+                    {% endif %}
 					{% endfor %}
+                
 				</tbody>
 			</table>
 		</div>

@@ -12,7 +12,14 @@ from django.contrib import messages
 
 class Dashboard(LoginRequiredMixin, View):
 	def get(self, request):
-		items = InventoryItem.objects.filter(user=self.request.user.id).order_by('id')
+		items = InventoryItem.objects.filter(consumable=False).order_by('id')
+
+		return render(request, 'inventory/dashboard.html', {'items': items})
+	
+
+class ConsumeableDashboard(LoginRequiredMixin, View):
+	def get(self, request):
+		items = InventoryItem.objects.filter(consumable=True).order_by('id')
 
 		low_inventory = InventoryItem.objects.filter(
 			user=self.request.user.id,
@@ -21,16 +28,16 @@ class Dashboard(LoginRequiredMixin, View):
 
 		if low_inventory.count() > 0:
 			if low_inventory.count() > 1:
-				messages.error(request, f'{low_inventory.count()} items have low inventory')
+				messages.error(request, f'{low_inventory.count()} consumable items have low inventory')
 			else:
-				messages.error(request, f'{low_inventory.count()} item has low inventory')
+				messages.error(request, f'{low_inventory.count()} consumable item has low inventory')
 
 		low_inventory_ids = InventoryItem.objects.filter(
 			user=self.request.user.id,
 			quantity__lte=LOW_QUANTITY
 		).values_list('id', flat=True)
 
-		return render(request, 'inventory/dashboard.html', {'items': items, 'low_inventory_ids': low_inventory_ids})
+		return render(request, 'inventory/consumable_dashboard.html', {'items': items, 'low_inventory_ids': low_inventory_ids})
 
 class SignUpView(View):
 	def get(self, request):
