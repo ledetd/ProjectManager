@@ -7,6 +7,8 @@ class InventoryItem(models.Model):
 	quantity = models.IntegerField()
 	category = models.ForeignKey('Category', on_delete=models.SET_NULL, blank=True, null=True)
 	date_created = models.DateTimeField(auto_now_add=True)
+	certification_date = models.DateField(blank=True, null=True)
+	recertification_date = models.DateField(blank=True, null=True)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 	def __str__(self):
