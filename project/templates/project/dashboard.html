@@ -2,6 +2,31 @@
 
 {% block content %}
 <div class="container">
-Hello
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Project</th>
+        <th scope="col">Project Manager</th>
+        <th scope="col">Location</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+      <tr>
+        <th scope="row">{{ project.project_name }}</th>
+        <td>{{ project.project_manager }}</td>
+        <td>{{ project.project_location }}</td>
+
+        <td><a class="nav-link text-info" href="#">Details</a></td> 
+        <td><a class="nav-link text-info" href="#">Update</a></td> 
+
+
+
+      </tr>
+      {% endfor %} 
+    </tbody>
+  </table>
 </div>
 {% endblock content %}

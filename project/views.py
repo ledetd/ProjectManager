@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
+from . models import Project
 
 
 
@@ -8,7 +9,8 @@ class Index(TemplateView):
 
 class Dashboard( View):
 	def get(self, request):
-		return render(request, 'project/dashboard.html', {})
+		projects = Project.objects.all()
+		return render(request, 'project/dashboard.html', {'projects':projects})
 	
 class Crewboard( View):
 	def get(self, request):

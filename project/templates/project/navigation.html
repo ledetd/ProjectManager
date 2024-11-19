@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-light">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="{% url 'index' %}">ProjectManager</a>
+		<a class="navbar-brand" href="{% url 'index' %}">Themis</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -9,14 +9,19 @@
 
 				<!-- Authentication -->
 				{% if user.is_authenticated %}
-					<li class="nav-item">
-						<a class="nav-link" href="#">{{ user.username }}</a>
-					</li>
 
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'dashboard' %}">Projects</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'wellboard' %}">Wells</a>
 					</li>
-
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'crewboard' %}">Crew</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">{{ user.username }}</a>
+					</li>
 				{% else %}
 				<!-- END Authentication -->
 				<li class="nav-item">
