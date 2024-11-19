@@ -6,16 +6,29 @@
 		</button>
 		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 			<ul class="navbar-nav">
+
+				<!-- Authentication -->
 				{% if user.is_authenticated %}
 					<li class="nav-item">
 						<a class="nav-link" href="#">{{ user.username }}</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
+						<a class="nav-link" href="{% url 'wellboard' %}">Wells</a>
 					</li>
-				{% else %}
 
+				{% else %}
+				<!-- END Authentication -->
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'dashboard' %}">Projects</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'wellboard' %}">Wells</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'crewboard' %}">Crew</a>
+				</li>
 
 				{% endif %}
 
