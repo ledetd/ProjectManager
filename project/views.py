@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from . models import Project, Well, Tool, Crew,  ProjectManager
-
+from . models import Project, Well, Tool, Crew
 
 
 class Index(TemplateView):
