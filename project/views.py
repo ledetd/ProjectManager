@@ -19,4 +19,8 @@ class Crewboard( View):
 class Wellboard( View):
 	def get(self, request):
 		return render(request, 'wells/wellboard.html', {})
+	
+class Scheduleboard( View):
+	def get(self, request):
+		return render(request, 'schedule/scheduleboard.html', {})
 
