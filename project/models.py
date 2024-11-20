@@ -14,3 +14,12 @@ class ProjectManager(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+class Well(models.Model):
+    well_name = models.CharField(max_length=500)
+    project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
+    job_number = models.CharField(max_length=500)
+    well_name = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.well_name

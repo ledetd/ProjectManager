@@ -2,6 +2,34 @@
 
 {% block content %}
 <div class="container">
-    Wells
-    </div>
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Well Name</th>
+        <th scope="col">Project </th>
+        <th scope="col">Project Manager</th>
+        <th scope="col">Job NUmber</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for well in wells %}
+      <tr>
+        <th scope="row">{{ well.well_name }}</th>
+        <td>{{ well.project }}</td>
+        <td>{{ well.project.project_manager }}</td>
+        <td>{{ well.job_number }}</td>
+
+        <td><a class="nav-link text-info" href="#">Details</a></td> 
+        <td><a class="nav-link text-info" href="#">Update</a></td> 
+
+
+
+      </tr>
+      {% endfor %} 
+    </tbody>
+  </table>
+</div>
 {% endblock content %}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from . models import Project
+from . models import Project, Well, ProjectManager
 
 
 
@@ -10,7 +10,7 @@ class Index(TemplateView):
 class Dashboard( View):
 	def get(self, request):
 		projects = Project.objects.all()
-		return render(request, 'project/dashboard.html', {'projects':projects})
+		return render(request, 'project/dashboard.html', {'projects': projects})
 	
 class Crewboard( View):
 	def get(self, request):
@@ -18,7 +18,8 @@ class Crewboard( View):
 	
 class Wellboard( View):
 	def get(self, request):
-		return render(request, 'wells/wellboard.html', {})
+		wells = Well.objects.all()
+		return render(request, 'wells/wellboard.html', {'wells': wells})
 	
 class Scheduleboard( View):
 	def get(self, request):
