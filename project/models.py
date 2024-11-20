@@ -23,3 +23,22 @@ class Well(models.Model):
 
     def __str__(self):
         return self.well_name
+    
+class Tool(models.Model):
+    tool_name = models.CharField(max_length=500)
+    tool_location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
+    well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
+    tool_number = models.CharField(max_length=500)
+    tool_used = models.BooleanField(default=False, null=True)
+    tool_hours = models.FloatField(blank=True, null=True)
+    tool_distance = models.FloatField(blank=True, null=True)
+    data_updates = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.tool_name
+
+class Location(models.Model):
+    location_name = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.location_name

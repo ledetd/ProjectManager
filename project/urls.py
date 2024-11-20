@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import Index, Dashboard, Crewboard, Wellboard, Scheduleboard
+from .views import Index, Dashboard, Crewboard, Wellboard, Scheduleboard, Toolboard
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('crewboard/', Crewboard.as_view(), name='crewboard'),
     path('wellboard/', Wellboard.as_view(), name='wellboard'),
     path('scheduleboard/', Scheduleboard.as_view(), name='scheduleboard'),
+    path('toolboard/', Toolboard.as_view(), name='toolboard'),
 ]
