@@ -32,13 +32,25 @@ class Tool(models.Model):
     tool_used = models.BooleanField(default=False, null=True)
     tool_hours = models.FloatField(blank=True, null=True)
     tool_distance = models.FloatField(blank=True, null=True)
-    data_updates = models.DateField(auto_now=True)
+    date_updated = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.tool_name
+        return f'{self.tool_name} {self.tool_number}'
 
 class Location(models.Model):
     location_name = models.CharField(max_length=500)
 
     def __str__(self):
         return self.location_name
+    
+class Crew(models.Model):
+    first_name = models.CharField(max_length=500)
+    last_name = models.CharField(max_length=500)
+    job_title = models.CharField(max_length=500)
+    location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
+    airport = models.CharField(max_length=500)
+    project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
+    date_updated = models.DateField(auto_now=True)
+    
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'

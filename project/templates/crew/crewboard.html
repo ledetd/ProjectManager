@@ -2,6 +2,35 @@
 
 {% block content %}
 <div class="container">
-    Crew
-    </div>
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Title </th>
+        <th scope="col">Project</th>
+        <th scope="col">Location</th>
+        <th scope="col">Airport</th>
+        <th scope="col">Updated</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for crew in crews %}
+      <tr>
+        <th scope="row">{{ crew.first_name}} {{ crew.last_name}}</th>
+        <td>{{ crew.job_title }}</td>
+        <td>{{ crew.project }}</td>
+        <td>{{ crew.location }}</td>
+        <td>{{ crew.airport }}</td>
+        <td>{{ crew.date_updated }}</td>
+
+        <td><a class="nav-link text-info" href="#">Details</a></td> 
+        <td><a class="nav-link text-info" href="#">Update</a></td> 
+      </tr>
+      {% endfor %} 
+    </tbody>
+  </table>
+</div>
 {% endblock content %}

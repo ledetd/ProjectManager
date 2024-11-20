@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from . models import Project, Well, Tool,  ProjectManager
+from . models import Project, Well, Tool, Crew,  ProjectManager
 
 
 
@@ -14,7 +14,8 @@ class Dashboard( View):
 	
 class Crewboard( View):
 	def get(self, request):
-		return render(request, 'crew/crewboard.html', {})
+		crews = Crew.objects.all().order_by('location','job_title')
+		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
 class Wellboard( View):
 	def get(self, request):
