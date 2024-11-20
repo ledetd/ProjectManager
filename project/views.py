@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from . models import Project, Well, Tool, Crew
+from . models import Project, Well, Tool, Crew, Note
 
 
 class Index(TemplateView):
@@ -29,3 +29,8 @@ class Toolboard( View):
 	def get(self, request):
 		tools = Tool.objects.all().order_by('-tool_location', 'tool_number')
 		return render(request, 'tools/toolboard.html', {'tools': tools})
+	
+class Noteboard( View):
+	def get(self, request):
+		notes = Note.objects.all()
+		return render(request, 'notes/noteboard.html', {'notes': notes})

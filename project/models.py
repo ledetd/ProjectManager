@@ -55,3 +55,12 @@ class Crew(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
+class Note(models.Model):
+    subject = models.CharField(max_length=500)
+    note = models.TextField(max_length=10000)
+    note_date = models.DateField(auto_now_add=True)
+    note_update = models.DateField(auto_now=True)
+    completed = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f'{self.subject} {self.note_date}'
