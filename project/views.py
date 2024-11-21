@@ -51,7 +51,11 @@ class AddNote(CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-
+class EditNote(UpdateView):
+	model = Note
+	form_class = NoteForm
+	template_name = 'notes/note_form.html'
+	success_url = reverse_lazy('noteboard')
 
 
 	

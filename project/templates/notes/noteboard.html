@@ -5,12 +5,11 @@
 
 
 
-
-
+  <div class="col-md-10 col-12 mx-auto mt-5">
 
   <div class="d-flex justify-content-end">
     {% if user.is_superuser %}
-    <a href="{% url 'add-note' %}" class="btn btn-primary">+</a>
+    <a href="{% url 'add-note' %}" class="btn btn-outline-info rounded">+</a>
     {% endif %}
   </div>
 
@@ -48,10 +47,11 @@
         {% endif %}
 
         <td><a class="nav-link text-info" href="#">Details</a></td> 
-        <td><a class="nav-link text-info" href="#">Update</a></td> 
+        <td><a class="nav-link text-info" href="{% url 'edit-note' note.id %}">Update</a></td> 
       </tr>
       {% endfor %} 
     </tbody>
   </table>
+  </div>
 </div>
 {% endblock content %}
