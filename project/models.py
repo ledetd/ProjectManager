@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class Project(models.Model):
     project_name = models.CharField(max_length=500)
@@ -64,3 +65,17 @@ class Note(models.Model):
     
     def __str__(self):
         return f'{self.subject} {self.note_date}'
+    
+class Day(models.Model):
+    day = models.DateField(auto_now=False)
+    well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
+    lift_frame = models.IntegerField(default=0)
+    mpd_manifold_building = models.IntegerField(default=0)
+    rcd_housing = models.IntegerField(default=0)
+    pipework = models.IntegerField(default=0)
+    mpd_supervisor = models.IntegerField(default=2)
+    mpd_operator  = models.IntegerField(default=2)
+
+
+    def __str__(self):
+        return self.day.strftime("%d %B")

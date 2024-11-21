@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from . models import Project, Well, Tool, Crew, Note
-
+from . models import Project, Well, Tool, Crew, Note, Day
 
 class Index(TemplateView):
 	template_name = 'project/index.html'
@@ -34,3 +33,8 @@ class Noteboard( View):
 	def get(self, request):
 		notes = Note.objects.all()
 		return render(request, 'notes/noteboard.html', {'notes': notes})
+	
+class Dayboard( View):
+	def get(self, request):
+		days = Day.objects.all().order_by('day')
+		return render(request, 'days/dayboard.html', {'days': days})
