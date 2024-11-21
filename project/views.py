@@ -43,6 +43,28 @@ class Wellboard( View):
 	def get(self, request):
 		wells = Well.objects.all().order_by('-active')
 		return render(request, 'wells/wellboard.html', {'wells': wells})
+
+class AddWell(CreateView):
+	model = Well
+	form_class = WellForm
+	template_name = 'wells/well_form.html'
+	success_url = reverse_lazy('wellboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['wells'] = Well.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+
+class EditWell(UpdateView):
+	model = Well
+	form_class = WellForm
+	template_name = 'wells/well_form.html'
+	success_url = reverse_lazy('wellboard')
+
 	
 class Scheduleboard( View):
 	def get(self, request):
@@ -134,23 +156,3 @@ class EditDay(UpdateView):
 
 
 
-class AddWell(CreateView):
-	model = Well
-	form_class = WellForm
-	template_name = 'wells/well_form.html'
-	success_url = reverse_lazy('wellboard')
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['wells'] = Well.objects.all()
-		return context
-
-	def form_valid(self, form):
-		form.instance.user = self.request.user
-		return super().form_valid(form)
-
-class EditWell(UpdateView):
-	model = Well
-	form_class = WellForm
-	template_name = 'wells/well_form.html'
-	success_url = reverse_lazy('wellboard')
