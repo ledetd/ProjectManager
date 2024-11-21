@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day
+from .forms import NoteForm
 
 class Index(TemplateView):
 	template_name = 'project/index.html'
@@ -31,10 +33,53 @@ class Toolboard( View):
 	
 class Noteboard( View):
 	def get(self, request):
-		notes = Note.objects.all()
+		notes = Note.objects.all(). order_by('-note_date')
 		return render(request, 'notes/noteboard.html', {'notes': notes})
+	
+class AddNote(CreateView):
+	model = Note
+	form_class = NoteForm
+	template_name = 'notes/note_form.html'
+	success_url = reverse_lazy('noteboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['notes'] = Note.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+
+
+
+
 	
 class Dayboard( View):
 	def get(self, request):
 		days = Day.objects.all().order_by('day')
 		return render(request, 'days/dayboard.html', {'days': days})
+	
+
+
+# class AddProject(CreateView):
+# 	model = Project
+# 	form_class = ProjectForm
+# 	template_name = 'project/project_form.html'
+# 	success_url = reverse_lazy('dashboard')
+
+# 	def get_context_data(self, **kwargs):
+# 		context = super().get_context_data(**kwargs)
+# 		context['locations'] = Location.objects.all()
+# 		return context
+
+# 	def form_valid(self, form):
+# 		form.instance.user = self.request.user
+# 		return super().form_valid(form)
+
+
+# class EditProject(UpdateView):
+# 	model = Project
+# 	form_class = ProjectForm
+# 	template_name = 'project/project_form.html'
+# 	success_url = reverse_lazy('dashboard')
