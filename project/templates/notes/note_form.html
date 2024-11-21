@@ -3,7 +3,7 @@
 
 
 {% block content %}
-	<a href="{% url 'noteboard' %}" class="btn btn-outline-primary my-3 mx-4">Go Back</a>
+	<a href="{% url 'noteboard' %}" class="btn btn-outline-info rounded my-3 mx-4">Go Back</a>
 
 	<div class="row">
 		<div class="col-11 col-md-4 mx-auto mt-5">
@@ -14,7 +14,7 @@
 				{{ form|crispy  }}
 
 				<div class="mt-3">
-					<button class="btn btn-outline-info rounded">Update</button>
+					<button class="btn btn-outline-info rounded">Submit</button>
 				</div>
 			</form>
 		</div>
