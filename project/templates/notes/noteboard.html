@@ -28,7 +28,7 @@
         {% if note.completed %}
         <td>Yes</td>
         {% else %}
-        <td>No</td>
+        <td class="text-danger">No</td>
         {% endif %}
         <td><a class="nav-link text-info" href="{% url 'edit-note' note.id %}">Update</a></td> 
       </tr>

@@ -57,7 +57,6 @@ class EditNote(UpdateView):
 	template_name = 'notes/note_form.html'
 	success_url = reverse_lazy('noteboard')
 
-
 	
 class Dayboard( View):
 	def get(self, request):
