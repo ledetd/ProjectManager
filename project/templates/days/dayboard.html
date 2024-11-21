@@ -3,6 +3,14 @@
 {% block content %}
 <div class="container">
 
+  <div class="d-flex justify-content-end m-4">
+    {% if user.is_superuser %}
+    <a href="{% url 'add-day' %}" class="btn btn-outline-info rounded">+</a>
+    {% endif %}
+  </div>
+
+
+
 <table class="table table-hover">
 
     <thead>
@@ -29,7 +37,7 @@
         <td>{{ day.lift_frame }}</td>
         <td>{{ day.mpd_supervisor }}</td>
         <td>{{ day.mpd_operator }}</td>
-        <td><a class="nav-link text-info" href="#">Update</a></td> 
+        <td><a class="nav-link text-info" href="{% url 'edit-day' day.id %}">Update</a></td> 
       </tr>
       {% endfor %} 
 
