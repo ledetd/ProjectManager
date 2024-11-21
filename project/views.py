@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day
-from .forms import NoteForm, DayForm
+from .forms import NoteForm, DayForm, ToolForm
 
 class Index(TemplateView):
 	template_name = 'project/index.html'
@@ -33,7 +33,7 @@ class Toolboard( View):
 	
 class Noteboard( View):
 	def get(self, request):
-		notes = Note.objects.all(). order_by('-note_date')
+		notes = Note.objects.all(). order_by('-note_date','completed')
 		return render(request, 'notes/noteboard.html', {'notes': notes})
 	
 class AddNote(CreateView):
@@ -84,3 +84,26 @@ class EditDay(UpdateView):
 	form_class = DayForm
 	template_name = 'days/day_form.html'
 	success_url = reverse_lazy('dayboard')
+
+
+
+class AddTool(CreateView):
+	model = Tool
+	form_class = ToolForm
+	template_name = 'tools/tool_form.html'
+	success_url = reverse_lazy('toolboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['tools'] = Tool.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+
+class EditTool(UpdateView):
+	model = Tool
+	form_class = ToolForm
+	template_name = 'tools/tool_form.html'
+	success_url = reverse_lazy('toolboard')
