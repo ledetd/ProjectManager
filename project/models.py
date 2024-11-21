@@ -20,7 +20,7 @@ class Well(models.Model):
     well_name = models.CharField(max_length=500)
     project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
     job_number = models.CharField(max_length=500)
-    well_name = models.CharField(max_length=500)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.well_name
@@ -30,7 +30,7 @@ class Tool(models.Model):
     tool_location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
     well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
     tool_number = models.CharField(max_length=500)
-    tool_used = models.BooleanField(default=False, null=True)
+    tool_used = models.BooleanField(default=False)
     tool_hours = models.FloatField(blank=True, null=True)
     tool_distance = models.FloatField(blank=True, null=True)
     date_updated = models.DateField(auto_now=True)

@@ -22,6 +22,26 @@
     </thead>
     <tbody>
         {% for tool in tools %}
+
+        {% if tool.tool_used %}
+     
+        <tr>
+          <th scope="row" class="text-danger">{{ tool.tool_name }}</th>
+          <td class="text-danger">{{ tool.tool_number }}</td>
+          <td class="text-danger">{{ tool.tool_location }}</td>
+          <td class="text-danger">{{ tool.well_name.well_name }}</td>
+          {% if tool.tool_used %}
+          <td class="text-danger">Yes</td>
+          {% else %}
+          <td class="text-danger">No</td>
+          {% endif %}
+          <td class="text-danger">{{ tool.date_updated }}</td>
+          <td ><a class="nav-link text-danger" href="{% url 'edit-tool' tool.id %}">Update</a></td> 
+        </tr>
+     
+  {% else %}
+
+
       <tr>
         <th scope="row">{{ tool.tool_name }}</th>
         <td>{{ tool.tool_number }}</td>
@@ -35,6 +55,9 @@
         <td>{{ tool.date_updated }}</td>
         <td><a class="nav-link text-info" href="{% url 'edit-tool' tool.id %}">Update</a></td> 
       </tr>
+
+{% endif %}
+
       {% endfor %} 
     </tbody>
   </table>

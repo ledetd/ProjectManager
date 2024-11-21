@@ -3,6 +3,12 @@
 {% block content %}
 <div class="container">
 
+  <div class="d-flex justify-content-end m-4">
+    {% if user.is_superuser %}
+    <a href="{% url 'add-well' %}" class="btn btn-outline-info rounded">+</a>
+    {% endif %}
+  </div>
+
 <table class="table table-hover">
     <thead>
       <tr>
@@ -16,15 +22,30 @@
     </thead>
     <tbody>
         {% for well in wells %}
+
+        {% if well.active %}
+        <tr class="table-success">
+          <th scope="row">{{ well.well_name }}</th>
+          <td>{{ well.project }}</td>
+          <td>{{ well.project.project_manager }}</td>
+          <td>{{ well.job_number }}</td>
+          <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
+        </tr>
+  {% else %}
+
+
+
       <tr>
         <th scope="row">{{ well.well_name }}</th>
         <td>{{ well.project }}</td>
         <td>{{ well.project.project_manager }}</td>
         <td>{{ well.job_number }}</td>
-
-        <td><a class="nav-link text-info" href="#">Details</a></td> 
-        <td><a class="nav-link text-info" href="#">Update</a></td> 
+        <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
       </tr>
+
+{% endif %}
+
+
       {% endfor %} 
     </tbody>
   </table>

@@ -3,6 +3,12 @@
 {% block content %}
 <div class="container">
 
+  <div class="d-flex justify-content-end m-4">
+    {% if user.is_superuser %}
+    <a href="{% url 'add-crew' %}" class="btn btn-outline-info rounded">+</a>
+    {% endif %}
+  </div>
+
 <table class="table table-hover">
     <thead>
       <tr>
@@ -26,8 +32,8 @@
         <td>{{ crew.airport }}</td>
         <td>{{ crew.date_updated }}</td>
 
-        <td><a class="nav-link text-info" href="#">Details</a></td> 
-        <td><a class="nav-link text-info" href="#">Update</a></td> 
+   
+        <td><a class="nav-link text-info" href="{% url 'edit-crew' crew.id %}">Update</a></td> 
       </tr>
       {% endfor %} 
     </tbody>
