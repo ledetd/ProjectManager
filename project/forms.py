@@ -36,7 +36,7 @@ class CrewForm(forms.ModelForm):
 
 	class Meta:
 		model = Crew
-		fields = ['first_name', 'last_name', 'job_title', 'location', 'airport', 'project']
+		fields = ['first_name', 'last_name', 'job_title', 'location', 'airport', 'project', 'BST', 'IWCF']
 
 class WellForm(forms.ModelForm):
 	wells = forms.ModelChoiceField(queryset=Well.objects.all(), initial=0),

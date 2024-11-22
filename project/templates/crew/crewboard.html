@@ -24,6 +24,8 @@
     </thead>
     <tbody>
         {% for crew in crews %}
+        {% if crew.BST  %}
+
       <tr>
         <th scope="row">{{ crew.first_name}} {{ crew.last_name}}</th>
         <td>{{ crew.job_title }}</td>
@@ -31,10 +33,21 @@
         <td>{{ crew.location }}</td>
         <td>{{ crew.airport }}</td>
         <td>{{ crew.date_updated }}</td>
-
-   
         <td><a class="nav-link text-info" href="{% url 'edit-crew' crew.id %}">Update</a></td> 
       </tr>
+
+      {% else %}
+      <tr class="table-danger">
+        <th scope="row">{{ crew.first_name}} {{ crew.last_name}}</th>
+        <td>{{ crew.job_title }}</td>
+        <td>{{ crew.project }}</td>
+        <td>{{ crew.location }}</td>
+        <td>{{ crew.airport }}</td>
+        <td>{{ crew.date_updated }}</td>
+        <td><a class="nav-link text-info" href="{% url 'edit-crew' crew.id %}">Update</a></td> 
+      </tr>
+      {% endif %}
+
       {% endfor %} 
     </tbody>
   </table>

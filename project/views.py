@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm
@@ -7,17 +8,17 @@ from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm
 class Index(TemplateView):
 	template_name = 'project/index.html'
 
-class Dashboard( View):
+class Dashboard(LoginRequiredMixin, View):
 	def get(self, request):
 		projects = Project.objects.all()
 		return render(request, 'project/dashboard.html', {'projects': projects})
 	
-class Crewboard( View):
+class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):
-		crews = Crew.objects.all().order_by('location','job_title')
+		crews = Crew.objects.all().order_by( '-BST', 'location','job_title')
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 
-class AddCrew(CreateView):
+class AddCrew(LoginRequiredMixin, CreateView):
 	model = Crew
 	form_class = CrewForm
 	template_name = 'crew/crew_form.html'
@@ -32,19 +33,19 @@ class AddCrew(CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditCrew(UpdateView):
+class EditCrew(LoginRequiredMixin, UpdateView):
 	model = Crew
 	form_class = CrewForm
 	template_name = 'crew/crew_form.html'
 	success_url = reverse_lazy('crewboard')
 
 
-class Wellboard( View):
+class Wellboard( LoginRequiredMixin, View):
 	def get(self, request):
 		wells = Well.objects.all().order_by('-active')
 		return render(request, 'wells/wellboard.html', {'wells': wells})
 
-class AddWell(CreateView):
+class AddWell(LoginRequiredMixin, CreateView):
 	model = Well
 	form_class = WellForm
 	template_name = 'wells/well_form.html'
@@ -59,23 +60,23 @@ class AddWell(CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditWell(UpdateView):
+class EditWell(LoginRequiredMixin, UpdateView):
 	model = Well
 	form_class = WellForm
 	template_name = 'wells/well_form.html'
 	success_url = reverse_lazy('wellboard')
 
 	
-class Scheduleboard( View):
+class Scheduleboard(LoginRequiredMixin, View):
 	def get(self, request):
 		return render(request, 'schedule/scheduleboard.html', {})
 
-class Toolboard( View):
+class Toolboard(LoginRequiredMixin, View):
 	def get(self, request):
 		tools = Tool.objects.all().order_by( 'tool_name','-tool_location', 'tool_number')
 		return render(request, 'tools/toolboard.html', {'tools': tools})
 
-class AddTool(CreateView):
+class AddTool(LoginRequiredMixin, CreateView):
 	model = Tool
 	form_class = ToolForm
 	template_name = 'tools/tool_form.html'
@@ -90,18 +91,18 @@ class AddTool(CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditTool(UpdateView):
+class EditTool(LoginRequiredMixin, UpdateView):
 	model = Tool
 	form_class = ToolForm
 	template_name = 'tools/tool_form.html'
 	success_url = reverse_lazy('toolboard')
 
-class Noteboard( View):
+class Noteboard(LoginRequiredMixin, View):
 	def get(self, request):
 		notes = Note.objects.all(). order_by('-note_date','completed')
 		return render(request, 'notes/noteboard.html', {'notes': notes})
 	
-class AddNote(CreateView):
+class AddNote(LoginRequiredMixin, CreateView):
 	model = Note
 	form_class = NoteForm
 	template_name = 'notes/note_form.html'
@@ -116,19 +117,19 @@ class AddNote(CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditNote(UpdateView):
+class EditNote(LoginRequiredMixin, UpdateView):
 	model = Note
 	form_class = NoteForm
 	template_name = 'notes/note_form.html'
 	success_url = reverse_lazy('noteboard')
 
 	
-class Dayboard( View):
+class Dayboard(LoginRequiredMixin, View):
 	def get(self, request):
 		days = Day.objects.all().order_by('day')
 		return render(request, 'days/dayboard.html', {'days': days})
 	
-class AddDay(CreateView):
+class AddDay(LoginRequiredMixin, CreateView):
 	model = Day
 	form_class = DayForm
 	template_name = 'days/day_form.html'
@@ -143,7 +144,7 @@ class AddDay(CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditDay(UpdateView):
+class EditDay(LoginRequiredMixin, UpdateView):
 	model = Day
 	form_class = DayForm
 	template_name = 'days/day_form.html'
