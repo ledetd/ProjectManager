@@ -11,3 +11,4 @@ admin.site.register(Note)
 admin.site.register(Day)
 
 
+

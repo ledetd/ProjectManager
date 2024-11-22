@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm
+from . main import *
 
 class Index(TemplateView):
 	template_name = 'project/index.html'
