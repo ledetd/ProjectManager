@@ -56,6 +56,7 @@ class Crew(models.Model):
 
     BST = models.BooleanField(default=False)
     IWCF = models.BooleanField(default=False)
+    H2S = models.BooleanField(default=False)
 
  
 
@@ -84,6 +85,7 @@ class Day(models.Model):
     mpd_operator  = models.IntegerField(default=2)
 
 
+
     def __str__(self):
         return self.day.strftime("%d %B")
-    
+

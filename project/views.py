@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm
-from . main import *
+
 
 class Index(TemplateView):
 	template_name = 'project/index.html'
@@ -100,7 +100,7 @@ class EditTool(LoginRequiredMixin, UpdateView):
 
 class Noteboard(LoginRequiredMixin, View):
 	def get(self, request):
-		notes = Note.objects.all(). order_by('-note_date','completed')
+		notes = Note.objects.all(). order_by('completed','-note_date')
 		return render(request, 'notes/noteboard.html', {'notes': notes})
 	
 class AddNote(LoginRequiredMixin, CreateView):

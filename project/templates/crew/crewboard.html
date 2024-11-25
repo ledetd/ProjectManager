@@ -24,7 +24,7 @@
     </thead>
     <tbody>
         {% for crew in crews %}
-        {% if crew.BST  %}
+        {% if crew.BST and crew.H2S %}
 
       <tr>
         <th scope="row">{{ crew.first_name}} {{ crew.last_name}}</th>
