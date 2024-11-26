@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from . models import Project, Well, Tool, Crew, Note, Day
-from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm
+from . models import Project, Well, Tool, Crew, Note, Day, Spare
+from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm
 
 
 class Index(TemplateView):
@@ -97,6 +97,33 @@ class EditTool(LoginRequiredMixin, UpdateView):
 	form_class = ToolForm
 	template_name = 'tools/tool_form.html'
 	success_url = reverse_lazy('toolboard')
+
+
+class Spareboard(LoginRequiredMixin, View):
+	def get(self, request):
+		spares = Spare.objects.all()
+		return render(request, 'spares/spareboard.html', {'spares': spares})
+
+class AddSpare(LoginRequiredMixin, CreateView):
+	model = Spare
+	form_class = SpareForm
+	template_name = 'spares/spare_form.html'
+	success_url = reverse_lazy('spareboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['spares'] = Spare.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+
+class EditSpare(LoginRequiredMixin, UpdateView):
+	model = Spare
+	form_class = SpareForm
+	template_name = 'spares/spare_form.html'
+	success_url = reverse_lazy('spareboard')
 
 class Noteboard(LoginRequiredMixin, View):
 	def get(self, request):

@@ -89,3 +89,21 @@ class Day(models.Model):
     def __str__(self):
         return self.day.strftime("%d %B")
 
+class Category(models.Model):
+    category_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.category_name
+
+class Spare(models.Model):
+    category_name = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
+    description = models.CharField(max_length=500)
+    detail = models.CharField(max_length=500)
+    quantity_in_unit = models.IntegerField(default=0)
+    quantity_on_location = models.IntegerField(default=0)
+    vendor = models.CharField(max_length=500, null=True, blank=True)
+    notes = models.TextField(max_length=10000, null=True, blank=True)
+    critical_spare = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.description
