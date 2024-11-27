@@ -1,13 +1,51 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<div class="container m-4">
+<div class="container">
 
 
     <div class="card m-2">
         <div class="card-body">
-            {{ crew.first_name}} {{ crew.last_name}}
+            <h3 class="display-6 fw-normal">{{ crew.first_name}} {{ crew.last_name}}</h3>
+            
         </div>
+        <div class="card m-2">
+            <div class="card-body">
+                <div class="card-title mb-2">
+                    <h3 class="display-6">Data</h3>
+                    </div>
+    
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item fw-light">Position - {{crew.job_title}}</li>
+                            <li class="list-group-item fw-light">Airport - {{crew.airport}}</li>
+                            <li class="list-group-item fw-light">Project - {{crew.project}}</li>
+                        </ul>
+                    </div>
+                <div class="card-title mt-2">
+                    <h3 class="display-6">Certifications</h3>
+                
+                </div>
+
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+    
+                        {% if crew.BST %}
+                        <li class="list-group-item fw-light">BST - {{ crew.date_bst }} | Expires - {{ crew.bst_expires }}</li>
+                        {% endif %}
+                        {% if crew.IWCF %}
+                        <li class="list-group-item fw-light">IWCF - {{ crew.date_iwcf }} | Expires - {{ crew.iwcf_expires }}</li>
+                        {% endif %}
+                        {% if crew.H2S %}
+                        <li class="list-group-item fw-light">H2S - {{ crew.date_h2s }} | Expires - {{ crew.h2s_expires }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+
       </div>
 
 

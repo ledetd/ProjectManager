@@ -1,8 +1,6 @@
 {% extends 'base/base.html' %}
-
 {% block content %}
 <div class="container">
-
 <table class="table table-hover">
     <thead>
       <tr>
@@ -19,12 +17,8 @@
         <th scope="row">{{ project.project_name }}</th>
         <td>{{ project.project_manager }}</td>
         <td>{{ project.project_location }}</td>
-
         <td><a class="nav-link text-info" href="#">Details</a></td> 
         <td><a class="nav-link text-info" href="#">Update</a></td> 
-
-
-
       </tr>
       {% endfor %} 
     </tbody>

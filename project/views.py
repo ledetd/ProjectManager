@@ -7,7 +7,6 @@ from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm
 from django.utils import timezone
 
 
-
 class Index(TemplateView):
 	template_name = 'project/index.html'
 
@@ -26,7 +25,6 @@ class CrewDetailView(LoginRequiredMixin, DetailView):
 	template_name = 'crew/crew_detail.html'
 
 	
-
 class AddCrew(LoginRequiredMixin, CreateView):
 	model = Crew
 	form_class = CrewForm
@@ -109,7 +107,7 @@ class EditTool(LoginRequiredMixin, UpdateView):
 
 class Spareboard(LoginRequiredMixin, View):
 	def get(self, request):
-		spares = Spare.objects.all()
+		spares = Spare.objects.all().order_by('-spare_location')
 		return render(request, 'spares/spareboard.html', {'spares': spares})
 
 class AddSpare(LoginRequiredMixin, CreateView):

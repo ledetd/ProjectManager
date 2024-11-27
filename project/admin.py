@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Project, ProjectManager, Well, Tool, Location, Crew, Note, Day, Category, Spare
+from . models import Project, ProjectManager, Well, Tool, Location, Crew, Note, Day, Category, Spare, SpareLocation
 
 admin.site.register(Project)
 admin.site.register(ProjectManager)
@@ -11,6 +11,7 @@ admin.site.register(Note)
 admin.site.register(Day)
 admin.site.register(Category)
 admin.site.register(Spare)
+admin.site.register(SpareLocation)
 
 
 

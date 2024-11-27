@@ -36,15 +36,24 @@ class SpareForm(forms.ModelForm):
 
 	class Meta:
 		model = Spare
-		fields = ['category_name', 'description', 'detail', 'quantity_in_unit', 'quantity_on_location', 'vendor','notes','critical_spare']
+		fields = ['category_name', 'description', 'detail', 'spare_location', 'quantity_in_unit', 'quantity_on_location', 'vendor','notes','critical_spare']
 
 class CrewForm(forms.ModelForm):
 	crews = forms.ModelChoiceField(queryset=Crew.objects.all(), initial=0),
 
 	class Meta:
 		model = Crew
-		fields = ['first_name', 'last_name', 'job_title', 'location', 'airport', 'project', 'BST', 'IWCF', 'H2S']
+		fields = ['first_name', 'last_name', 'job_title', 'location', 'airport', 'project',
+			 'BST', 'date_bst', 'bst_expires',  'IWCF',  'date_iwcf','iwcf_expires', 'H2S', 'date_h2s', 'h2s_expires']
 
+		widgets = {
+            'date_bst': DateInput(),
+			'date_iwcf': DateInput(),
+			'date_h2s': DateInput(),
+			'bst_expires': DateInput(),
+			'iwcf_expires': DateInput(),
+			'h2s_expires': DateInput(),
+        }
 class WellForm(forms.ModelForm):
 	wells = forms.ModelChoiceField(queryset=Well.objects.all(), initial=0),
 

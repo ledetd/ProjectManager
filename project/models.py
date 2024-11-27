@@ -55,12 +55,15 @@ class Crew(models.Model):
     date_updated = models.DateField(auto_now=True)
 
     BST = models.BooleanField(default=False)
+    date_bst = models.DateField()
+    bst_expires = models.DateField()
     IWCF = models.BooleanField(default=False)
+    date_iwcf = models.DateField()
+    iwcf_expires = models.DateField()
     H2S = models.BooleanField(default=False)
+    date_h2s = models.DateField()
+    h2s_expires = models.DateField()
 
- 
-
-    
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
     
@@ -99,11 +102,18 @@ class Spare(models.Model):
     category_name = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
     description = models.CharField(max_length=500)
     detail = models.CharField(max_length=500)
+    spare_location = models.ForeignKey("SpareLocation", on_delete=models.SET_NULL, null=True)
     quantity_in_unit = models.IntegerField(default=0)
     quantity_on_location = models.IntegerField(default=0)
     vendor = models.CharField(max_length=500, null=True, blank=True)
-    notes = models.TextField(max_length=10000, null=True, blank=True)
+    notes = models.CharField(max_length=10000, null=True, blank=True)
     critical_spare = models.BooleanField(default=False)
 
     def __str__(self):
         return self.description
+    
+class SpareLocation(models.Model):
+    spare_location_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.spare_location_name
