@@ -34,6 +34,7 @@
         <td>{{ crew.airport }}</td>
         <td>{{ crew.date_updated }}</td>
         <td><a class="nav-link text-info" href="{% url 'edit-crew' crew.id %}">Update</a></td> 
+        <td><a class="nav-link text-info" href="{% url 'detail-crew' crew.id %}">Detail</a></td> 
       </tr>
 
       {% else %}
@@ -45,6 +46,7 @@
         <td>{{ crew.airport }}</td>
         <td>{{ crew.date_updated }}</td>
         <td><a class="nav-link text-info" href="{% url 'edit-crew' crew.id %}">Update</a></td> 
+        <td><a class="nav-link text-info" href="{% url 'detail-crew' crew.id %}">Detail</a></td> 
       </tr>
       {% endif %}
 

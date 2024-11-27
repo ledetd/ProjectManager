@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day, Spare
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm
+from django.utils import timezone
+
 
 
 class Index(TemplateView):
@@ -18,6 +20,12 @@ class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):
 		crews = Crew.objects.all().order_by( '-BST', 'location','job_title')
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
+	
+class CrewDetailView(LoginRequiredMixin, DetailView):
+	model = Crew
+	template_name = 'crew/crew_detail.html'
+
+	
 
 class AddCrew(LoginRequiredMixin, CreateView):
 	model = Crew
