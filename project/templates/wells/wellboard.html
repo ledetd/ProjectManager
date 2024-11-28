@@ -26,6 +26,7 @@
           <td>{{ well.project.project_manager }}</td>
           <td>{{ well.job_number }}</td>
           <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
+          <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">Detail</a></td> 
         </tr>
 {% else %}
       <tr>
@@ -34,6 +35,7 @@
         <td>{{ well.project.project_manager }}</td>
         <td>{{ well.job_number }}</td>
         <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
+        <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">Detail</a></td> 
       </tr>
 {% endif %}
 {% endfor %} 

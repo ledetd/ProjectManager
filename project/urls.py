@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import Index, Dashboard, Crewboard, AddCrew, EditCrew, Wellboard, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool, Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay, Spareboard, AddSpare, EditSpare, CrewDetailView
+from .views import Index, Dashboard, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool, Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay, Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -13,12 +13,14 @@ urlpatterns = [
     path('edit-crew/<int:pk>', EditCrew.as_view(), name='edit-crew'),   
 
     path('wellboard/', Wellboard.as_view(), name='wellboard'),
+    path("detail-well/<int:pk>", WellDetailView.as_view(), name="detail-well"),
     path('add-well/', AddWell.as_view(), name='add-well'),
     path('edit-well/<int:pk>', EditWell.as_view(), name='edit-well'),   
 
     path('scheduleboard/', Scheduleboard.as_view(), name='scheduleboard'),
     
     path('spareboard/', Spareboard.as_view(), name='spareboard'),
+    path("detail-spare/<int:pk>", SpareDetailView.as_view(), name="detail-spare"),
     path('add-spare/', AddSpare.as_view(), name='add-spare'),
     path('edit-spare/<int:pk>', EditSpare.as_view(), name='edit-spare'),   
 
@@ -29,6 +31,7 @@ urlpatterns = [
     path('noteboard/', Noteboard.as_view(), name='noteboard'),
     path('add-note/', AddNote.as_view(), name='add-note'),
     path('edit-note/<int:pk>', EditNote.as_view(), name='edit-note'),
+    path('delete-note/<int:pk>', DeleteNote.as_view(), name='delete-note'),
 
     path('dayboard/', Dayboard.as_view(), name='dayboard'),
     path('add-day/', AddDay.as_view(), name='add-day'),

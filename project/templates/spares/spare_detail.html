@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="container">
+	<a href="{% url 'spareboard' %}" class="btn btn-outline-info rounded my-3 mx-4">Go Back</a>
+    <div class="card m-2">
+        <div class="card-body">
+            <h3 >{{ spare.description}} </h3>
+        </div>
+        <div class="card m-2">
+            <div class="card-body">
+                <div class="card-title mb-2">
+                    <h3 >Data</h3>
+                    </div>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item ">Location - {{spare.spare_location}}</li>
+                            <li class="list-group-item ">Vendor - {{spare.vendor}}</li>
+                            {% if spare.critical_spare %}
+                            <li class="list-group-item ">Critical Spare - Yes</li>
+                            {% else %}
+                            <li class="list-group-item ">Critical Spare - No</li>
+                            {% endif %}
+                            <li class="list-group-item ">Notes - {{spare.notes}}</li>
+
+                        </ul>
+                    </div>
+            </div>
+        </div>
+      </div>
+{% endblock content %}

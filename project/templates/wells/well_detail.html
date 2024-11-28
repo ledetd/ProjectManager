@@ -1,0 +1,31 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="container">
+	<a href="{% url 'wellboard' %}" class="btn btn-outline-info rounded my-3 mx-4">Go Back</a>
+    <div class="card m-2">
+        <div class="card-body">
+            <h3 > Well Name - {{ well.well_name}}</h3>
+        </div>
+  
+            <div class="card-body">
+                <div class="card-title mb-2">
+                    <h3 ></h3>
+                    </div>
+                   
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item ">Project  - {{well.project}}</li>
+                            <li class="list-group-item ">Job Number - {{well.job_number}}</li>
+                            {% if well.active %}
+                            <li class="list-group-item ">Active - Yes</li>
+                            {% else %}
+                            <li class="list-group-item ">Active - No</li>
+                            {% endif %}
+
+                        </ul>
+               
+                    <a href="#" class="btn btn-outline-info rounded my-3 mx-4">Tools</a>
+            </div>
+        </div>
+      </div>
+{% endblock content %}

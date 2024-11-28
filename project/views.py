@@ -17,7 +17,7 @@ class Dashboard(LoginRequiredMixin, View):
 	
 class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):
-		crews = Crew.objects.all().order_by("-on_location", "-job_title")
+		crews = Crew.objects.all().order_by("-on_location", "-job_title", "location")
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
 class CrewDetailView(LoginRequiredMixin, DetailView):
@@ -51,6 +51,10 @@ class Wellboard( LoginRequiredMixin, View):
 	def get(self, request):
 		wells = Well.objects.all().order_by('-active')
 		return render(request, 'wells/wellboard.html', {'wells': wells})
+
+class WellDetailView(LoginRequiredMixin, DetailView):
+	model = Well
+	template_name = 'wells/well_detail.html'
 
 class AddWell(LoginRequiredMixin, CreateView):
 	model = Well
@@ -110,6 +114,10 @@ class Spareboard(LoginRequiredMixin, View):
 		spares = Spare.objects.all().order_by('-spare_location')
 		return render(request, 'spares/spareboard.html', {'spares': spares})
 
+class SpareDetailView(LoginRequiredMixin, DetailView):
+	model = Spare
+	template_name = 'spares/spare_detail.html'
+
 class AddSpare(LoginRequiredMixin, CreateView):
 	model = Spare
 	form_class = SpareForm
@@ -156,6 +164,12 @@ class EditNote(LoginRequiredMixin, UpdateView):
 	form_class = NoteForm
 	template_name = 'notes/note_form.html'
 	success_url = reverse_lazy('noteboard')
+
+class DeleteNote(LoginRequiredMixin, DeleteView):
+	model = Note
+	template_name = 'notes/delete_note.html'
+	success_url = reverse_lazy('noteboard')
+	context_object_name = 'note'
 
 	
 class Dayboard(LoginRequiredMixin, View):
