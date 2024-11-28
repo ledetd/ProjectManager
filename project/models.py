@@ -53,6 +53,9 @@ class Crew(models.Model):
     airport = models.CharField(max_length=500)
     project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
     date_updated = models.DateField(auto_now=True)
+    on_location = models.BooleanField(default=False)
+
+    today = models.DateField(auto_now=True)
 
     BST = models.BooleanField(default=False)
     date_bst = models.DateField()
@@ -63,6 +66,16 @@ class Crew(models.Model):
     H2S = models.BooleanField(default=False)
     date_h2s = models.DateField()
     h2s_expires = models.DateField()
+
+    @property
+    def bst_expires_soon(self):
+        expires_soon =  self.today - self.bst_expires
+        return expires_soon
+    
+    @property
+    def h2s_expires_soon(self):
+        expires_soon = self.h2s_expires - self.today 
+        return expires_soon
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

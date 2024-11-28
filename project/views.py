@@ -17,7 +17,7 @@ class Dashboard(LoginRequiredMixin, View):
 	
 class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):
-		crews = Crew.objects.all().order_by( '-BST', 'location','job_title')
+		crews = Crew.objects.all().order_by("-on_location", "-job_title")
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
 class CrewDetailView(LoginRequiredMixin, DetailView):

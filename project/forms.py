@@ -43,7 +43,7 @@ class CrewForm(forms.ModelForm):
 
 	class Meta:
 		model = Crew
-		fields = ['first_name', 'last_name', 'job_title', 'location', 'airport', 'project',
+		fields = ['first_name', 'last_name', 'job_title', 'location', 'on_location', 'airport', 'project',
 			 'BST', 'date_bst', 'bst_expires',  'IWCF',  'date_iwcf','iwcf_expires', 'H2S', 'date_h2s', 'h2s_expires']
 
 		widgets = {
