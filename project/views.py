@@ -5,6 +5,7 @@ from django.views.generic import TemplateView, View, CreateView, UpdateView, Det
 from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm
 from django.utils import timezone
+from django.db.models import Sum
 
 
 class Index(TemplateView):
@@ -172,10 +173,25 @@ class DeleteNote(LoginRequiredMixin, DeleteView):
 	context_object_name = 'note'
 
 	
+# class Dayboard(LoginRequiredMixin, View):
+# 	def get(self, request):
+# 		days = Day.objects.all().order_by('day')
+# 		return render(request, 'days/dayboard.html', {'days': days})
+
+
 class Dayboard(LoginRequiredMixin, View):
 	def get(self, request):
 		days = Day.objects.all().order_by('day')
-		return render(request, 'days/dayboard.html', {'days': days})
+		lift_sum = Day.objects.aggregate(total_lift_frame=Sum('lift_frame'))['total_lift_frame'] or 0
+		mmb_sum = Day.objects.aggregate(total_mmb=Sum('mpd_manifold_building'))['total_mmb'] or 0
+		rcd_sum = Day.objects.aggregate(total_rcd=Sum('rcd_housing'))['total_rcd'] or 0
+		pipework_sum = Day.objects.aggregate(total_pipework=Sum('pipework'))['total_pipework'] or 0
+		mmb_sum = Day.objects.aggregate(total_mmb=Sum('mpd_manifold_building'))['total_mmb'] or 0
+		mpd_supervisor_sum = Day.objects.aggregate(total_mpd_supervisor=Sum('mpd_supervisor'))['total_mpd_supervisor'] or 0
+		mpd_operator_sum = Day.objects.aggregate(total_mpd_operator=Sum('mpd_operator'))['total_mpd_operator'] or 0
+
+		return render(request, 'days/dayboard.html', {'days': days, 'lift_sum': lift_sum, 'mmb_sum': mmb_sum, 'rcd_sum': rcd_sum, 'pipework_sum': pipework_sum, 'mpd_supervisor_sum': mpd_supervisor_sum, 'mpd_operator_sum': mpd_operator_sum })
+
 	
 class AddDay(LoginRequiredMixin, CreateView):
 	model = Day

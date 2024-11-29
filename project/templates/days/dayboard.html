@@ -23,17 +23,52 @@
     <tbody>
         {% for day in days %}
       <tr>
-        <th scope="row">{{ day.day}} </th>
-        <th>{{ day.well_name}} </th>
+        <td scope="row">{{ day.day}} </th>
+        <td>{{ day.well_name}} </th>
+          {% if  day.mpd_manifold_building %}
         <td>{{ day.mpd_manifold_building }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.rcd_housing %}
         <td>{{ day.rcd_housing }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.pipework %}
         <td>{{ day.pipework }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.lift_frame %}
         <td>{{ day.lift_frame }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.mpd_supervisor %}
         <td>{{ day.mpd_supervisor }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.mpd_operator %}
         <td>{{ day.mpd_operator }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
         <td><a class="nav-link text-info" href="{% url 'edit-day' day.id %}">Update</a></td> 
       </tr>
+    
       {% endfor %} 
+        <tr class="table-success">
+          <th>Totals</td>
+            <td></td>
+          <td><strong>{{ mmb_sum }}</strong></td>
+          <td><strong>{{ rcd_sum }}</strong></td>
+          <td><strong>{{ pipework_sum }}</strong></td>
+          <td><strong>{{ lift_sum }}</strong></td>
+          <td><strong>{{ mpd_supervisor_sum }}</strong></td>
+          <td><strong>{{ mpd_operator_sum }}</strong></td>     
+        </tr>
     </tbody>
   </table>
 </div>

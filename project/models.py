@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Project(models.Model):
     project_name = models.CharField(max_length=500)
     project_manager = models.ForeignKey("ProjectManager", on_delete=models.SET_NULL, null=True)
@@ -103,16 +104,19 @@ class Day(models.Model):
     day = models.DateField(auto_now=False)
     well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
     lift_frame = models.IntegerField(default=0)
-    mpd_manifold_building = models.IntegerField(default=0)
-    rcd_housing = models.IntegerField(default=0)
-    pipework = models.IntegerField(default=0)
+    mpd_manifold_building = models.IntegerField(default=1)
+    rcd_housing = models.IntegerField(default=1)
+    pipework = models.IntegerField(default=1)
     mpd_supervisor = models.IntegerField(default=2)
     mpd_operator  = models.IntegerField(default=2)
 
-
-
     def __str__(self):
         return self.day.strftime("%d %B")
+    
+    @property
+    def month(self):
+        month = self.day.strftime("%M")
+        return month
 
 class Category(models.Model):
     category_name = models.CharField(max_length=50)
