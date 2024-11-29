@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
-from . models import Note, Day, Tool, Crew, Well, Spare
+from . models import Note, Day, Tool, Crew, Well, Spare, Tracker
 
 class NoteForm(forms.ModelForm):
 	notes = forms.ModelChoiceField(queryset=Note.objects.all(), initial=0),
@@ -60,3 +60,13 @@ class WellForm(forms.ModelForm):
 	class Meta:
 		model = Well
 		fields = ['well_name', 'project', 'job_number', 'active']
+
+class TrackerForm(forms.ModelForm):
+	spares = forms.ModelChoiceField(queryset=Tracker.objects.all(), initial=0),
+
+	class Meta:
+		model = Tracker
+		fields = ['project_name', 'well_name', 'hole_section', 'run_number', 'rcd_number', 'bearing_number', 'sealing_element',
+			 'total_installed_time', 'total_rotating_time', 'max_rpm', 'total_stripped_length',
+			   'max_connection_surface_back_pressure', 'max_drilling_surface_back_pressure', 'max_stripping_surface_back_pressure',
+				 'average_flow_line_temp', 'max_flow_line_temp', 'mud_system', 'mud_weight', 'sealing_element_failure']

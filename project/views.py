@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker
-from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm
+from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm
 from django.utils import timezone
 
 
@@ -206,5 +206,12 @@ class Trackerboard(LoginRequiredMixin, View):
 		trackers = Tracker.objects.all()
 		return render(request, 'tracker/trackerboard.html', {'trackers': trackers})
 
+class TrackerDetailView(LoginRequiredMixin, DetailView):
+	model = Tracker
+	template_name = 'tracker/tracker_detail.html'
 
-
+class EditTracker(LoginRequiredMixin, UpdateView):
+	model = Tracker
+	form_class = TrackerForm
+	template_name = 'tracker/tracker_form.html'
+	success_url = reverse_lazy('trackerboard')
