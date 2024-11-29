@@ -199,11 +199,9 @@ class EditDay(LoginRequiredMixin, UpdateView):
 	success_url = reverse_lazy('dayboard')
 
 
-
-
 class Trackerboard(LoginRequiredMixin, View):
 	def get(self, request):
-		trackers = Tracker.objects.all()
+		trackers = Tracker.objects.all().order_by('well_name', '-hole_section')
 		return render(request, 'tracker/trackerboard.html', {'trackers': trackers})
 
 class TrackerDetailView(LoginRequiredMixin, DetailView):
@@ -215,3 +213,18 @@ class EditTracker(LoginRequiredMixin, UpdateView):
 	form_class = TrackerForm
 	template_name = 'tracker/tracker_form.html'
 	success_url = reverse_lazy('trackerboard')
+
+class AddTracker(LoginRequiredMixin, CreateView):
+	model = Tracker
+	form_class = TrackerForm
+	template_name = 'tracker/tracker_form.html'
+	success_url = reverse_lazy('trackerboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['trackers'] = Tracker.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
