@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import Index, Dashboard, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool, Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay, Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote
+from .views import Index, Dashboard, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool, Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay, Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote, Trackerboard
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -36,4 +36,7 @@ urlpatterns = [
     path('dayboard/', Dayboard.as_view(), name='dayboard'),
     path('add-day/', AddDay.as_view(), name='add-day'),
     path('edit-day/<int:pk>', EditDay.as_view(), name='edit-day'),
+
+    path('trackerboard/', Trackerboard.as_view(), name='trackerboard'),
+
 ]

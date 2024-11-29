@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
-from . models import Project, Well, Tool, Crew, Note, Day, Spare
+from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm
 from django.utils import timezone
 
@@ -201,7 +201,10 @@ class EditDay(LoginRequiredMixin, UpdateView):
 
 
 
-
+class Trackerboard(LoginRequiredMixin, View):
+	def get(self, request):
+		trackers = Tracker.objects.all()
+		return render(request, 'tracker/trackerboard.html', {'trackers': trackers})
 
 
 
