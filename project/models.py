@@ -157,12 +157,12 @@ class Tracker(models.Model):
     max_connection_surface_back_pressure  = models.IntegerField(default=0)
     max_drilling_surface_back_pressure  = models.IntegerField(default=0)
     max_stripping_surface_back_pressure  = models.IntegerField(default=0)
-    average_flow_line_temp  = models.IntegerField(default=0)
-    max_flow_line_temp  = models.IntegerField(default=0)
+    average_flow_line_temp  = models.FloatField(default=0)
+    max_flow_line_temp  = models.FloatField(default=0)
     mud_system = models.CharField(max_length=50)
     mud_weight = models.FloatField(default=0)
 
     sealing_element_failure = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'RCD Tracker {self.well_name}'
+        return f'RCD Tracker {self.well_name} | {self.hole_section}'
