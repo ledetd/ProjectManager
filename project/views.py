@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
-from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker
+from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm
 from django.utils import timezone
 from django.db.models import Sum
@@ -238,3 +238,8 @@ class AddTracker(LoginRequiredMixin, CreateView):
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
+	
+class Hercboard(LoginRequiredMixin, View):
+	def get(self, request):
+		hercs = Herc.objects.all()
+		return render(request, 'herc/hercboard.html', {'hercs': hercs})

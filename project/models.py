@@ -170,3 +170,9 @@ class Tracker(models.Model):
 
     def __str__(self):
         return f'RCD Tracker {self.well_name} | {self.hole_section}'
+    
+class Herc(models.Model):
+    crew_member = models.ForeignKey("Crew", on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.crew_member

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-from .views import Index, Dashboard, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool, Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay, Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote, Trackerboard, TrackerDetailView, AddTracker, EditTracker
+from .views import Index, Dashboard, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool,Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay 
+from .views import Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote, Trackerboard, TrackerDetailView, AddTracker, EditTracker, Hercboard
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -40,6 +41,8 @@ urlpatterns = [
     path('trackerboard/', Trackerboard.as_view(), name='trackerboard'),
     path("detail-tracker/<int:pk>", TrackerDetailView.as_view(), name="detail-tracker"),
     path('add-tracker/', AddTracker.as_view(), name='add-tracker'),
-    path('edit-tracker/<int:pk>', EditTracker.as_view(), name='edit-tracker'),   
+    path('edit-tracker/<int:pk>', EditTracker.as_view(), name='edit-tracker'),  
+     
+    path('hercboard/', Hercboard.as_view(), name='hercboard'), 
 
 ]
