@@ -172,12 +172,6 @@ class DeleteNote(LoginRequiredMixin, DeleteView):
 	success_url = reverse_lazy('noteboard')
 	context_object_name = 'note'
 
-	
-# class Dayboard(LoginRequiredMixin, View):
-# 	def get(self, request):
-# 		days = Day.objects.all().order_by('day')
-# 		return render(request, 'days/dayboard.html', {'days': days})
-
 
 class Dayboard(LoginRequiredMixin, View):
 	def get(self, request):
