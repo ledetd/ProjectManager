@@ -5,6 +5,7 @@ class Project(models.Model):
     project_manager = models.ForeignKey("ProjectManager", on_delete=models.SET_NULL, null=True)
     project_location = models.CharField(max_length=500)
 
+
     def __str__(self):
         return self.project_name
 

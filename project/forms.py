@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
-from . models import Note, Day, Tool, Crew, Well, Spare, Tracker
+from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project
 
 class NoteForm(forms.ModelForm):
 	notes = forms.ModelChoiceField(queryset=Note.objects.all(), initial=0),
@@ -13,6 +13,14 @@ class NoteForm(forms.ModelForm):
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
+class ProjectForm(forms.ModelForm):
+	projects = forms.ModelChoiceField(queryset=Project.objects.all(), initial=0),
+
+	class Meta:
+		model = Project
+		fields = [ 'project_name', 'project_manager', 'project_location']
+
 
 class DayForm(forms.ModelForm):
 	days = forms.ModelChoiceField(queryset=Day.objects.all(), initial=0),

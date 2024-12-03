@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
 from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc
-from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm
+from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm, ProjectForm
 from django.utils import timezone
 from django.db.models import Sum
 
@@ -15,6 +15,25 @@ class Dashboard(LoginRequiredMixin, View):
 	def get(self, request):
 		projects = Project.objects.all()
 		return render(request, 'project/dashboard.html', {'projects': projects})
+	
+
+class AddProject(LoginRequiredMixin, CreateView):
+	model = Project
+	form_class = ProjectForm
+	template_name = 'project/project_form.html'
+	success_url = reverse_lazy('dashboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['projects'] = Project.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+	
+
+
 	
 class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):

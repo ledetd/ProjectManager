@@ -17,12 +17,24 @@
         <th scope="col">LF</th>
         <th scope="col">Sup</th>
         <th scope="col">Op</th>
-        <th scope="col"></th>
+       
+        
       </tr>
     </thead>
     <tbody>
+      <tr class="table-primary">
+        <th>Totals</td>
+          <td></td>
+        <td><strong>{{ mmb_sum }}</strong></td>
+        <td><strong>{{ rcd_sum }}</strong></td>
+        <td><strong>{{ pipework_sum }}</strong></td>
+        <td><strong>{{ lift_sum }}</strong></td>
+        <td><strong>{{ mpd_supervisor_sum }}</strong></td>
+        <td><strong>{{ mpd_operator_sum }}</strong></td>  
+        <td></td>   
+      </tr>
         {% for day in days %}
-      <tr>
+      <tr >
         <td scope="row">{{ day.day}} </th>
         <td>{{ day.well_name}} </th>
           {% if  day.mpd_manifold_building %}
@@ -59,16 +71,7 @@
       </tr>
     
       {% endfor %} 
-        <tr class="table-success">
-          <th>Totals</td>
-            <td></td>
-          <td><strong>{{ mmb_sum }}</strong></td>
-          <td><strong>{{ rcd_sum }}</strong></td>
-          <td><strong>{{ pipework_sum }}</strong></td>
-          <td><strong>{{ lift_sum }}</strong></td>
-          <td><strong>{{ mpd_supervisor_sum }}</strong></td>
-          <td><strong>{{ mpd_operator_sum }}</strong></td>     
-        </tr>
+       
     </tbody>
   </table>
 </div>
