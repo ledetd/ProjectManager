@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Project(models.Model):
     project_name = models.CharField(max_length=500)
     project_manager = models.ForeignKey("ProjectManager", on_delete=models.SET_NULL, null=True)
@@ -41,7 +40,6 @@ class Tool(models.Model):
 class Location(models.Model):
     location_name = models.CharField(max_length=500)
     
-
     def __str__(self):
         return self.location_name
     
@@ -141,7 +139,6 @@ class Spare(models.Model):
 class SpareLocation(models.Model):
     spare_location_name = models.CharField(max_length=50)
     
-
     def __str__(self):
         return self.spare_location_name
     

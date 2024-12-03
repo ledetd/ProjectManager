@@ -18,14 +18,13 @@ class Dashboard(LoginRequiredMixin, View):
 	
 class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):
-		crews = Crew.objects.all().order_by("-on_location", "-job_title", "location")
+		crews = Crew.objects.all().order_by('project', "-on_location", "-job_title", "location")
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
 class CrewDetailView(LoginRequiredMixin, DetailView):
 	model = Crew
 	template_name = 'crew/crew_detail.html'
 
-	
 class AddCrew(LoginRequiredMixin, CreateView):
 	model = Crew
 	form_class = CrewForm
@@ -47,10 +46,9 @@ class EditCrew(LoginRequiredMixin, UpdateView):
 	template_name = 'crew/crew_form.html'
 	success_url = reverse_lazy('crewboard')
 
-
 class Wellboard( LoginRequiredMixin, View):
 	def get(self, request):
-		wells = Well.objects.all().order_by('-active')
+		wells = Well.objects.all().order_by('project','-active')
 		return render(request, 'wells/wellboard.html', {'wells': wells})
 
 class WellDetailView(LoginRequiredMixin, DetailView):
@@ -77,7 +75,6 @@ class EditWell(LoginRequiredMixin, UpdateView):
 	form_class = WellForm
 	template_name = 'wells/well_form.html'
 	success_url = reverse_lazy('wellboard')
-
 	
 class Scheduleboard(LoginRequiredMixin, View):
 	def get(self, request):
@@ -108,7 +105,6 @@ class EditTool(LoginRequiredMixin, UpdateView):
 	form_class = ToolForm
 	template_name = 'tools/tool_form.html'
 	success_url = reverse_lazy('toolboard')
-
 
 class Spareboard(LoginRequiredMixin, View):
 	def get(self, request):
@@ -172,7 +168,6 @@ class DeleteNote(LoginRequiredMixin, DeleteView):
 	success_url = reverse_lazy('noteboard')
 	context_object_name = 'note'
 
-
 class Dayboard(LoginRequiredMixin, View):
 	def get(self, request):
 		days = Day.objects.all().order_by('day')
@@ -186,7 +181,6 @@ class Dayboard(LoginRequiredMixin, View):
 
 		return render(request, 'days/dayboard.html', {'days': days, 'lift_sum': lift_sum, 'mmb_sum': mmb_sum, 'rcd_sum': rcd_sum, 'pipework_sum': pipework_sum, 'mpd_supervisor_sum': mpd_supervisor_sum, 'mpd_operator_sum': mpd_operator_sum })
 
-	
 class AddDay(LoginRequiredMixin, CreateView):
 	model = Day
 	form_class = DayForm
@@ -207,7 +201,6 @@ class EditDay(LoginRequiredMixin, UpdateView):
 	form_class = DayForm
 	template_name = 'days/day_form.html'
 	success_url = reverse_lazy('dayboard')
-
 
 class Trackerboard(LoginRequiredMixin, View):
 	def get(self, request):
