@@ -174,3 +174,16 @@ class Herc(models.Model):
 
     def __str__(self):
         return self.crew_member
+    
+class DailyReport(models.Model):
+    project_name = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
+    well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
+    date = models.DateField(auto_now=False)
+    hole_diameter = models.FloatField(default=0)
+    hole_depth = models.FloatField(default=0)
+    bearing_number = models.CharField(max_length=50)
+    total_length_stripped = models.FloatField(default=0)
+    total_rotating_hours = models.FloatField(default=0)
+
+    def __str__(self):
+        return f'{self.well_name} | {self.bearing_number}'

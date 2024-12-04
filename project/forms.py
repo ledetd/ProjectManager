@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
-from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project
+from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project, DailyReport
 
 class NoteForm(forms.ModelForm):
 	notes = forms.ModelChoiceField(queryset=Note.objects.all(), initial=0),
@@ -78,3 +78,13 @@ class TrackerForm(forms.ModelForm):
 			 'total_installed_time', 'total_rotating_time', 'max_rpm', 'total_stripped_length',
 			   'max_connection_surface_back_pressure', 'max_drilling_surface_back_pressure', 'max_stripping_surface_back_pressure',
 				 'average_flow_line_temp', 'max_flow_line_temp', 'mud_system', 'mud_weight', 'sealing_element_failure']
+		
+class DailyForm(forms.ModelForm):
+	dailys = forms.ModelChoiceField(queryset=DailyReport.objects.all(), initial=0),
+
+	class Meta:
+		model = DailyReport
+		fields = [ 'project_name', 'well_name', 'date', 'hole_diameter', 'hole_depth', 'bearing_number', 'total_length_stripped', 'total_rotating_hours']
+		widgets = {
+            'date': DateInput(),
+        }

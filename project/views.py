@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
-from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc
-from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm, ProjectForm
+from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc, DailyReport
+from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm, ProjectForm, DailyForm
 from django.utils import timezone
-from django.db.models import Sum
+from django.db.models import Sum, Minus 
 
 
 class Index(TemplateView):
@@ -32,8 +32,6 @@ class AddProject(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 	
-
-
 	
 class Crewboard( LoginRequiredMixin, View):
 	def get(self, request):
@@ -255,3 +253,23 @@ class Hercboard(LoginRequiredMixin, View):
 	def get(self, request):
 		hercs = Herc.objects.all()
 		return render(request, 'herc/hercboard.html', {'hercs': hercs})
+	
+class DailyReportBoard(LoginRequiredMixin, View):
+	def get(self, request):
+		reports = DailyReport.objects.all().order_by('date')
+		return render(request, 'daily/dailyboard.html', {'reports': reports})
+	
+class AddDailyReport(LoginRequiredMixin, CreateView):
+	model = DailyReport
+	form_class = DailyForm
+	template_name = 'daily/daily_form.html'
+	success_url = reverse_lazy('dailyboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['reports'] = DailyReport.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
