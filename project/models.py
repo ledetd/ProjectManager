@@ -187,3 +187,14 @@ class DailyReport(models.Model):
 
     def __str__(self):
         return f'{self.well_name} | {self.bearing_number}'
+    
+class Invoice(models.Model):
+    project_name = models.ForeignKey("Project", on_delete=models.CASCADE)
+    well_name = models.ForeignKey("Well", on_delete=models.CASCADE)
+    invoice_date = models.DateField(auto_now=False)
+    invoice_amount = models.FloatField(default=0)
+    invoice_reason = models.CharField(max_length=5000, null=True, blank=True)
+    invoice_paid = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.well_name} | {self.invoice_date}'

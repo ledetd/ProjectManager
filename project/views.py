@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
-from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc, DailyReport
-from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm, ProjectForm, DailyForm
+from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc, DailyReport, Invoice
+from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm, ProjectForm, DailyForm, InvoiceForm
 from django.utils import timezone
-from django.db.models import Sum, Minus 
+from django.db.models import Sum
 
 
 class Index(TemplateView):
@@ -268,6 +268,26 @@ class AddDailyReport(LoginRequiredMixin, CreateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['reports'] = DailyReport.objects.all()
+		return context
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		return super().form_valid(form)
+	
+class Invoiceboard(LoginRequiredMixin, View):
+	def get(self, request):
+		invoices = Invoice.objects.all()
+		return render(request, 'invoice/invoiceboard.html', {'invoices': invoices})
+	
+class AddInvoice(LoginRequiredMixin, CreateView):
+	model = Invoice
+	form_class = InvoiceForm
+	template_name = 'invoice/invoice_form.html'
+	success_url = reverse_lazy('invoiceboard')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['invoices'] = Invoice.objects.all()
 		return context
 
 	def form_valid(self, form):
