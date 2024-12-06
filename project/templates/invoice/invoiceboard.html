@@ -11,7 +11,7 @@
         <tr>
           <th scope="col">Project</th>
           <th scope="col">Well</th>
-          <th scope="col">Date</th>
+          <th scope="col">Inv Date</th>
           <th scope="col">Amount</th>
           <th scope="col">Details</th>
           <th scope="col">Paid</th>
@@ -24,14 +24,14 @@
           <th scope="row">{{ invoice.project_name }}</th>
           <td>{{ invoice.well_name }}</td>
           <td>{{ invoice.invoice_date }}</td>
-          <td>{{ invoice.invoice_amount }}</td>
+          <td>{{ invoice.invoice_amount|floatformat:2 }}</td>
           <td>{{ invoice.invoice_reason }}</td>
           {% if invoice.invoice_paid %}
           <td>Yes</td>
           {% else %}
           <td>No</td>
           {% endif %}
-          <td><a class="nav-link text-info" href="#">Update</a></td> 
+          <td><a class="nav-link text-info" href="{% url 'edit-invoice' invoice.id %}">Update</a></td> 
         </tr>
   {% endfor %} 
       </tbody>

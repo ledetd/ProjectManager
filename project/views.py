@@ -293,3 +293,9 @@ class AddInvoice(LoginRequiredMixin, CreateView):
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
+	
+class EditInvoice(LoginRequiredMixin, UpdateView):
+	model = Invoice
+	form_class = InvoiceForm
+	template_name = 'invoice/invoice_form.html'
+	success_url = reverse_lazy('invoiceboard')

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from .views import Index, Dashboard, AddProject, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool,Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay 
-from .views import Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote, Trackerboard, TrackerDetailView, AddTracker, EditTracker, Hercboard, DailyReportBoard, AddDailyReport, Invoiceboard, AddInvoice
+from .views import Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote, Trackerboard, TrackerDetailView, AddTracker, EditTracker, Hercboard, DailyReportBoard, AddDailyReport, Invoiceboard, AddInvoice, EditInvoice
 
 
 urlpatterns = [
@@ -51,5 +51,6 @@ urlpatterns = [
 
     path('invoiceboard/', Invoiceboard.as_view(), name='invoiceboard'), 
     path('add-invoice/', AddInvoice.as_view(), name='add-invoice'),
+    path('edit-invoice/<int:pk>', EditInvoice.as_view(), name='edit-invoice'),
 
 ]
