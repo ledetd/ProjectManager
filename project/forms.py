@@ -3,6 +3,9 @@ from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project, DailyReport, Invoice
 
+
+
+
 class NoteForm(forms.ModelForm):
 	notes = forms.ModelChoiceField(queryset=Note.objects.all(), initial=0),
 

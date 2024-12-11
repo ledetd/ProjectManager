@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Project(models.Model):
     project_name = models.CharField(max_length=500)
     project_manager = models.ForeignKey("ProjectManager", on_delete=models.SET_NULL, null=True)
