@@ -14,6 +14,9 @@
         <th scope="col">Location</th>
         <th scope="col">Well</th>
         <th scope="col">Used</th>
+        <th scope="col">Hours</th>
+        <th scope="col">Distance</th>
+        <th scope="col">Revs</th>
         <th scope="col">Updated</th>
         <th scope="col"></th>
       </tr>
@@ -31,6 +34,21 @@
           {% else %}
           <td class="text-danger">No</td>
           {% endif %}
+          {% if tool.tool_used %}
+          <td class="text-danger">{{tool.tool_hours}}</td>
+          {% else %}
+          <td class="text-danger">-</td>
+          {% endif %}
+          {% if tool.tool_used %}
+          <td class="text-danger">{{tool.tool_distance}}</td>
+          {% else %}
+          <td class="text-danger">-</td>
+          {% endif %}
+          {% if tool.tool_used %}
+          <td class="text-danger">{{tool.tool_revolutions}}</td>
+          {% else %}
+          <td class="text-danger">-</td>
+          {% endif %}
           <td class="text-danger">{{ tool.date_updated }}</td>
           <td ><a class="nav-link text-danger" href="{% url 'edit-tool' tool.id %}">Update</a></td> 
         </tr>
@@ -45,6 +63,9 @@
         {% else %}
         <td>No</td>
         {% endif %}
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
         <td>{{ tool.date_updated }}</td>
         <td><a class="nav-link text-info" href="{% url 'edit-tool' tool.id %}">Update</a></td> 
       </tr>

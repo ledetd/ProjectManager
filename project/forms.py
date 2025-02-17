@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
-from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project, DailyReport, Invoice
+from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project, Invoice
 
 
 
@@ -30,7 +30,8 @@ class DayForm(forms.ModelForm):
 
 	class Meta:
 		model = Day
-		fields = [ 'day', 'well_name', 'lift_frame', 'mpd_manifold_building', 'rcd_housing', 'pipework', 'mpd_supervisor', 'mpd_operator']
+		fields = [ 'day', 'well_name', 'current_operations', 'future_operations', 'bearing_id', 'total_rotating_hours', 'total_distance_stripped', 'total_revolutions',
+			 'lift_frame', 'mpd_manifold_building', 'rcd_housing', 'pipework', 'mpd_supervisor', 'mpd_operator', 'supervisor_weather_delay', 'operator_weather_delay']
 		widgets = {
             'day': DateInput(),
         }
@@ -40,7 +41,7 @@ class ToolForm(forms.ModelForm):
 
 	class Meta:
 		model = Tool
-		fields = ['tool_name', 'tool_location', 'well_name', 'tool_number', 'tool_used', 'tool_hours', 'tool_distance']
+		fields = ['tool_name', 'tool_location', 'well_name', 'tool_number', 'tool_used', 'tool_hours', 'tool_distance', 'tool_revolutions']
 
 class SpareForm(forms.ModelForm):
 	spares = forms.ModelChoiceField(queryset=Spare.objects.all(), initial=0),
@@ -79,15 +80,6 @@ class TrackerForm(forms.ModelForm):
 		model = Tracker
 		fields = []
 		
-class DailyForm(forms.ModelForm):
-	dailys = forms.ModelChoiceField(queryset=DailyReport.objects.all(), initial=0),
-
-	class Meta:
-		model = DailyReport
-		fields = [ 'project_name', 'well_name', 'date', 'hole_diameter', 'hole_depth', 'bearing_number', 'total_length_stripped', 'total_rotating_hours']
-		widgets = {
-            'date': DateInput(),
-        }
 
 class InvoiceForm(forms.ModelForm):
 	invoices = forms.ModelChoiceField(queryset=Invoice.objects.all(), initial=0),
