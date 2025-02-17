@@ -1,44 +1,31 @@
 {% extends 'base/base.html' %}
 {% block content %}
-
-
 <div class="container">
-    <div class="d-flex justify-content-end m-4">
-      {% if user.is_superuser %}
-      <a href="{% url 'add-tracker' %}" class="btn btn-outline-info rounded">+</a>
-      {% endif %}
-    </div>
+  <div class="d-flex justify-content-end m-4">
+    {% if user.is_superuser %}
+    <a href="{% url 'add-project' %}" class="btn btn-outline-info rounded">+</a>
+    {% endif %}
+  </div>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Drilled Length Rotating</th>
+        <th scope="col">drilledLengthSliding</th>
+        <th scope="col">drilledLengthTotal</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for tracker in trackers %}
+      <tr>
+        <th scope="row">{{ tracker.drilledLengthRotating }}</th>
+        <th scope="row">{{ tracker.drilledLengthSliding }}</th>
+        <th scope="row">{{ tracker.drilledLengthTotal }}</th>
 
-         <table class="table table-hover">
-            <thead>
-                <tr>
-                  <th scope="col">Project</th>
-                  <th scope="col">Well </th>
-                  <th scope="col">Section</th>
-                  <th scope="col">Run</th>
-                  <th scope="col">RCD</th>
-                  <th scope="col">Bearing</th>
-                  <th scope="col">Element</th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for tracker in trackers %}
-                <tr>
-                    <td>{{ tracker.project_name }}</th>
-                    <td>{{ tracker.well_name }}</td>
-                    <td>{{ tracker.hole_section }}</td>
-                    <td>{{ tracker.run_number }}</td>
-                    <td>{{ tracker.rcd_number}}</td>
-                    <td>{{ tracker.bearing_number}}</td>
-                    <td>{{ tracker.sealing_element}}</td>
-                    <td><a class="nav-link text-info" href="{% url 'edit-tracker' tracker.id %}">Update</a></td> 
-                    <td><a class="nav-link text-info" href="{% url 'detail-tracker' tracker.id %}">Detail</a></td> 
-                 
-                </tr>
-                {% endfor %} 
-            </tbody>
-     </table>
+      </tr>
+      {% endfor %} 
+    </tbody>
+  </table>
+</div>
 {% endblock content %}

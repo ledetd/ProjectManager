@@ -77,10 +77,7 @@ class TrackerForm(forms.ModelForm):
 
 	class Meta:
 		model = Tracker
-		fields = ['project_name', 'well_name', 'hole_section', 'run_number', 'rcd_number', 'bearing_number', 'sealing_element',
-			 'total_installed_time', 'total_rotating_time', 'max_rpm', 'total_stripped_length',
-			   'max_connection_surface_back_pressure', 'max_drilling_surface_back_pressure', 'max_stripping_surface_back_pressure',
-				 'average_flow_line_temp', 'max_flow_line_temp', 'mud_system', 'mud_weight', 'sealing_element_failure']
+		fields = []
 		
 class DailyForm(forms.ModelForm):
 	dailys = forms.ModelChoiceField(queryset=DailyReport.objects.all(), initial=0),

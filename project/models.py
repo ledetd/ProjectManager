@@ -145,30 +145,10 @@ class SpareLocation(models.Model):
         return self.spare_location_name
     
 class Tracker(models.Model):
-    project_name = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
-    well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
-    hole_section = models.CharField(max_length=50)
-    run_number = models.IntegerField(default=0)
-    rcd_number = models.CharField(max_length=50)
-    bearing_number = models.CharField(max_length=50)
-    sealing_element = models.CharField(max_length=50)
-   
-    total_installed_time = models.FloatField(default=0)
-    total_rotating_time = models.FloatField(default=0)
-    max_rpm = models.IntegerField(default=0)
-    total_stripped_length = models.IntegerField(default=0)
-    max_connection_surface_back_pressure  = models.IntegerField(default=0)
-    max_drilling_surface_back_pressure  = models.IntegerField(default=0)
-    max_stripping_surface_back_pressure  = models.IntegerField(default=0)
-    average_flow_line_temp  = models.FloatField(default=0)
-    max_flow_line_temp  = models.FloatField(default=0)
-    mud_system = models.CharField(max_length=50)
-    mud_weight = models.FloatField(default=0)
 
-    sealing_element_failure = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'RCD Tracker {self.well_name} | {self.hole_section}'
+    drilledLengthRotating = models.FloatField(default=0, null=True, blank=True)
+    drilledLengthSliding = models.FloatField(default=0, null=True, blank=True)
+    drilledLengthTotal = models.FloatField(default=0, null=True, blank=True)
     
 class Herc(models.Model):
     crew_member = models.ForeignKey("Crew", on_delete=models.SET_NULL, null=True)

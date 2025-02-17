@@ -11,13 +11,13 @@ from django.db.models import Sum
 class Index(TemplateView):
 	template_name = 'project/index.html'
 
-class Dashboard(LoginRequiredMixin, View):
+class Dashboard( View):
 	def get(self, request):
 		projects = Project.objects.all()
 		return render(request, 'project/dashboard.html', {'projects': projects})
 	
 
-class AddProject(LoginRequiredMixin, CreateView):
+class AddProject( CreateView):
 	model = Project
 	form_class = ProjectForm
 	template_name = 'project/project_form.html'
@@ -33,16 +33,16 @@ class AddProject(LoginRequiredMixin, CreateView):
 		return super().form_valid(form)
 	
 	
-class Crewboard( LoginRequiredMixin, View):
+class Crewboard(  View):
 	def get(self, request):
 		crews = Crew.objects.all().order_by('project', "-on_location", "-job_title", "location")
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
-class CrewDetailView(LoginRequiredMixin, DetailView):
+class CrewDetailView( DetailView):
 	model = Crew
 	template_name = 'crew/crew_detail.html'
 
-class AddCrew(LoginRequiredMixin, CreateView):
+class AddCrew( CreateView):
 	model = Crew
 	form_class = CrewForm
 	template_name = 'crew/crew_form.html'
@@ -57,22 +57,22 @@ class AddCrew(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditCrew(LoginRequiredMixin, UpdateView):
+class EditCrew( UpdateView):
 	model = Crew
 	form_class = CrewForm
 	template_name = 'crew/crew_form.html'
 	success_url = reverse_lazy('crewboard')
 
-class Wellboard( LoginRequiredMixin, View):
+class Wellboard(  View):
 	def get(self, request):
 		wells = Well.objects.all().order_by('project','-active')
 		return render(request, 'wells/wellboard.html', {'wells': wells})
 
-class WellDetailView(LoginRequiredMixin, DetailView):
+class WellDetailView( DetailView):
 	model = Well
 	template_name = 'wells/well_detail.html'
 
-class AddWell(LoginRequiredMixin, CreateView):
+class AddWell( CreateView):
 	model = Well
 	form_class = WellForm
 	template_name = 'wells/well_form.html'
@@ -87,22 +87,22 @@ class AddWell(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditWell(LoginRequiredMixin, UpdateView):
+class EditWell( UpdateView):
 	model = Well
 	form_class = WellForm
 	template_name = 'wells/well_form.html'
 	success_url = reverse_lazy('wellboard')
 	
-class Scheduleboard(LoginRequiredMixin, View):
+class Scheduleboard( View):
 	def get(self, request):
 		return render(request, 'schedule/scheduleboard.html', {})
 
-class Toolboard(LoginRequiredMixin, View):
+class Toolboard( View):
 	def get(self, request):
 		tools = Tool.objects.all().order_by( 'tool_name','-tool_location', 'tool_number')
 		return render(request, 'tools/toolboard.html', {'tools': tools})
 
-class AddTool(LoginRequiredMixin, CreateView):
+class AddTool( CreateView):
 	model = Tool
 	form_class = ToolForm
 	template_name = 'tools/tool_form.html'
@@ -117,22 +117,22 @@ class AddTool(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditTool(LoginRequiredMixin, UpdateView):
+class EditTool( UpdateView):
 	model = Tool
 	form_class = ToolForm
 	template_name = 'tools/tool_form.html'
 	success_url = reverse_lazy('toolboard')
 
-class Spareboard(LoginRequiredMixin, View):
+class Spareboard( View):
 	def get(self, request):
 		spares = Spare.objects.all().order_by('-spare_location')
 		return render(request, 'spares/spareboard.html', {'spares': spares})
 
-class SpareDetailView(LoginRequiredMixin, DetailView):
+class SpareDetailView( DetailView):
 	model = Spare
 	template_name = 'spares/spare_detail.html'
 
-class AddSpare(LoginRequiredMixin, CreateView):
+class AddSpare( CreateView):
 	model = Spare
 	form_class = SpareForm
 	template_name = 'spares/spare_form.html'
@@ -147,18 +147,18 @@ class AddSpare(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditSpare(LoginRequiredMixin, UpdateView):
+class EditSpare( UpdateView):
 	model = Spare
 	form_class = SpareForm
 	template_name = 'spares/spare_form.html'
 	success_url = reverse_lazy('spareboard')
 
-class Noteboard(LoginRequiredMixin, View):
+class Noteboard( View):
 	def get(self, request):
 		notes = Note.objects.all(). order_by('completed','-note_date')
 		return render(request, 'notes/noteboard.html', {'notes': notes})
 	
-class AddNote(LoginRequiredMixin, CreateView):
+class AddNote( CreateView):
 	model = Note
 	form_class = NoteForm
 	template_name = 'notes/note_form.html'
@@ -173,19 +173,19 @@ class AddNote(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditNote(LoginRequiredMixin, UpdateView):
+class EditNote( UpdateView):
 	model = Note
 	form_class = NoteForm
 	template_name = 'notes/note_form.html'
 	success_url = reverse_lazy('noteboard')
 
-class DeleteNote(LoginRequiredMixin, DeleteView):
+class DeleteNote( DeleteView):
 	model = Note
 	template_name = 'notes/delete_note.html'
 	success_url = reverse_lazy('noteboard')
 	context_object_name = 'note'
 
-class Dayboard(LoginRequiredMixin, View):
+class Dayboard( View):
 	def get(self, request):
 		days = Day.objects.all().order_by('day')
 		lift_sum = Day.objects.aggregate(total_lift_frame=Sum('lift_frame'))['total_lift_frame'] or 0
@@ -198,7 +198,7 @@ class Dayboard(LoginRequiredMixin, View):
 
 		return render(request, 'days/dayboard.html', {'days': days, 'lift_sum': lift_sum, 'mmb_sum': mmb_sum, 'rcd_sum': rcd_sum, 'pipework_sum': pipework_sum, 'mpd_supervisor_sum': mpd_supervisor_sum, 'mpd_operator_sum': mpd_operator_sum })
 
-class AddDay(LoginRequiredMixin, CreateView):
+class AddDay( CreateView):
 	model = Day
 	form_class = DayForm
 	template_name = 'days/day_form.html'
@@ -213,28 +213,28 @@ class AddDay(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 
-class EditDay(LoginRequiredMixin, UpdateView):
+class EditDay( UpdateView):
 	model = Day
 	form_class = DayForm
 	template_name = 'days/day_form.html'
 	success_url = reverse_lazy('dayboard')
 
-class Trackerboard(LoginRequiredMixin, View):
+class Trackerboard( View):
 	def get(self, request):
-		trackers = Tracker.objects.all().order_by('well_name', '-hole_section')
+		trackers = Tracker.objects.all()
 		return render(request, 'tracker/trackerboard.html', {'trackers': trackers})
 
-class TrackerDetailView(LoginRequiredMixin, DetailView):
+class TrackerDetailView( DetailView):
 	model = Tracker
 	template_name = 'tracker/tracker_detail.html'
 
-class EditTracker(LoginRequiredMixin, UpdateView):
+class EditTracker( UpdateView):
 	model = Tracker
 	form_class = TrackerForm
 	template_name = 'tracker/tracker_form.html'
 	success_url = reverse_lazy('trackerboard')
 
-class AddTracker(LoginRequiredMixin, CreateView):
+class AddTracker( CreateView):
 	model = Tracker
 	form_class = TrackerForm
 	template_name = 'tracker/tracker_form.html'
@@ -249,17 +249,17 @@ class AddTracker(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 	
-class Hercboard(LoginRequiredMixin, View):
+class Hercboard( View):
 	def get(self, request):
 		hercs = Herc.objects.all()
 		return render(request, 'herc/hercboard.html', {'hercs': hercs})
 	
-class DailyReportBoard(LoginRequiredMixin, View):
+class DailyReportBoard( View):
 	def get(self, request):
 		reports = DailyReport.objects.all().order_by('date')
 		return render(request, 'daily/dailyboard.html', {'reports': reports})
 	
-class AddDailyReport(LoginRequiredMixin, CreateView):
+class AddDailyReport( CreateView):
 	model = DailyReport
 	form_class = DailyForm
 	template_name = 'daily/daily_form.html'
@@ -274,12 +274,12 @@ class AddDailyReport(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 	
-class Invoiceboard(LoginRequiredMixin, View):
+class Invoiceboard( View):
 	def get(self, request):
 		invoices = Invoice.objects.all()
 		return render(request, 'invoice/invoiceboard.html', {'invoices': invoices})
 	
-class AddInvoice(LoginRequiredMixin, CreateView):
+class AddInvoice( CreateView):
 	model = Invoice
 	form_class = InvoiceForm
 	template_name = 'invoice/invoice_form.html'
@@ -294,7 +294,7 @@ class AddInvoice(LoginRequiredMixin, CreateView):
 		form.instance.user = self.request.user
 		return super().form_valid(form)
 	
-class EditInvoice(LoginRequiredMixin, UpdateView):
+class EditInvoice( UpdateView):
 	model = Invoice
 	form_class = InvoiceForm
 	template_name = 'invoice/invoice_form.html'
