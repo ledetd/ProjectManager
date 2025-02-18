@@ -17,6 +17,9 @@
         <th scope="col">LF</th>
         <th scope="col">Sup</th>
         <th scope="col">Op</th>
+        <th scope="col">SupDel</th>
+        <th scope="col">OpDel</th>
+        <th scope="col"></th>
      
        
         
@@ -32,6 +35,8 @@
         <td><strong>{{ lift_sum }}</strong></td>
         <td><strong>{{ mpd_supervisor_sum }}</strong></td>
         <td><strong>{{ mpd_operator_sum }}</strong></td>  
+        <td><strong>-</strong></td>  
+        <td><strong>-</strong></td>  
        
         
         <td></td>   
@@ -67,6 +72,16 @@
         {% endif %}
         {% if  day.mpd_operator %}
         <td>{{ day.mpd_operator }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.supervisor_weather_delay %}
+        <td>{{ day.supervisor_weather_delay }}</td>
+        {% else %}
+        <td>-</td>
+        {% endif %}
+        {% if  day.operator_weather_delay %}
+        <td>{{ day.operator_weather_delay }}</td>
         {% else %}
         <td>-</td>
         {% endif %}

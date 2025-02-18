@@ -35,7 +35,7 @@ class AddProject( CreateView):
 	
 class Crewboard(  View):
 	def get(self, request):
-		crews = Crew.objects.all().order_by('project', "-on_location", "-job_title", "location")
+		crews = Crew.objects.all().order_by('project', "-job_title", "-on_location",  "location")
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
 class CrewDetailView( DetailView):
