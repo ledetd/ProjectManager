@@ -95,6 +95,7 @@ class Schedule(models.Model):
 class Note(models.Model):
     subject = models.CharField(max_length=500)
     note = models.TextField(max_length=10000)
+    day_due = models.DateField(auto_now=False)
     note_date = models.DateField(auto_now_add=True)
     note_update = models.DateField(auto_now=True)
     completed = models.BooleanField(default=False)

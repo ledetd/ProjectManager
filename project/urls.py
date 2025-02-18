@@ -49,5 +49,6 @@ urlpatterns = [
     path('invoiceboard/', Invoiceboard.as_view(), name='invoiceboard'), 
     path('add-invoice/', AddInvoice.as_view(), name='add-invoice'),
     path('edit-invoice/<int:pk>', EditInvoice.as_view(), name='edit-invoice'),
+    
 
 ]
