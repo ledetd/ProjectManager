@@ -27,6 +27,7 @@ class Well(models.Model):
         return self.well_name
     
 class Tool(models.Model):
+    project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
     tool_name = models.CharField(max_length=500)
     tool_location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
     well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
@@ -104,6 +105,7 @@ class Note(models.Model):
         return f'{self.subject} {self.note_date}'
     
 class Day(models.Model):
+    project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
     day = models.DateField(auto_now=False)
     well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
     current_operations = models.CharField(max_length=5000, null=True, blank=True)

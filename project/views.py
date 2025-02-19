@@ -11,10 +11,19 @@ from django.db.models import Sum
 class Index(TemplateView):
 	template_name = 'project/index.html'
 
-class Dashboard( View):
-	def get(self, request):
-		projects = Project.objects.all()
-		return render(request, 'project/dashboard.html', {'projects': projects})
+class Dashboard(TemplateView):
+	model = Project
+	template_name = 'project/dashboard.html'
+	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['projects'] = Project.objects.all()
+		context['wells'] = Well.objects.all()
+		context['crews'] = Crew.objects.all()
+		context['tools'] = Tool.objects.all()
+		context['day'] = Day.objects.all()
+		
+		return context
 	
 class ProjectDetailView( DetailView):
 	model = Project

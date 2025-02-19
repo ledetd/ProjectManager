@@ -1,31 +1,53 @@
 {% extends 'base/base.html' %}
 {% block content %}
 <div class="container">
-	<a href="{% url 'dashboard' %}" class="btn btn-outline-info rounded my-3 mx-4">Go Back</a>
-    <div class="card m-2">
-        <div class="card-body">
-            <h3 > Project - {{ project.project_name}}</h3>
-        
-            <div class="card-body">
-                <div class="card-title mb-2">
-                    <h3 ></h3>
-                    </div>
-                   
-                        <ul class="list-group list-group-flush">
-{% for well in wells %}
-                            <li class="list-group-item ">Project  - {{well.project}}</li>
-                            <li class="list-group-item ">Job Number - {{well.job_number}}</li>
-                            {% if well.active %}
-                            <li class="list-group-item ">Active - Yes</li>
-                            {% else %}
-                            <li class="list-group-item ">Active - No</li>
-                            {% endif %}
-{% endfor %}
-                        </ul>
-               
-                    <a href="#" class="btn btn-outline-info rounded my-3 mx-4">Tools</a>
-            </div>
-          
+<a href="{% url 'dashboard' %}" class="btn btn-outline-info rounded my-3 mx-4">Go Back</a>
+
+<h3 > Project - {{ project.project_name}}</h3>
+
+<div class="card m-2">
+    <div>Wells</div>
+    <div class="card-body">
+        {% for well in project.well_set.all %}
+        <div>
+        {{ well.well_name }}
         </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card m-2">
+    <div>Crew</div>
+    <div class="card-body">
+        {% for crew in project.crew_set.all %}
+        <div>
+        {{ crew.first_name }} {{ crew.last_name }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card m-2">
+    <div>Tools</div>
+    <div class="card-body">
+        {% for tool in project.tool_set.all %}
+        <div>
+        {{ tool.tool_number}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="card m-2">
+    <div>Report</div>
+    <div class="card-body">
+        {% for day in project.day_set.all %}
+        <div>
+        {{ day.current_operations}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 
 {% endblock content %}
