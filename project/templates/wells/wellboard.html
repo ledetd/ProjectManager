@@ -6,6 +6,9 @@
     <a href="{% url 'add-well' %}" class="btn btn-outline-info rounded">+</a>
     {% endif %}
   </div>
+  <div class="display-6">
+    Active
+  </div>
 <table class="table table-hover">
     <thead>
       <tr>
@@ -28,18 +31,44 @@
           <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
           <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">Detail</a></td> 
         </tr>
-{% else %}
-      <tr>
-        <th scope="row">{{ well.well_name }}</th>
-        <td>{{ well.project }}</td>
-        <td>{{ well.project.project_manager }}</td>
-        <td>{{ well.job_number }}</td>
-        <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
-        <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">Detail</a></td> 
-      </tr>
+
 {% endif %}
 {% endfor %} 
     </tbody>
   </table>
+
+  <div class="display-6">
+    Inactive
+  </div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Well Name</th>
+        <th scope="col">Project </th>
+        <th scope="col">Project Manager</th>
+        <th scope="col">Job Number</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+{% for well in wells %}
+{% if not well.active %}
+        <tr class="table">
+          <th scope="row">{{ well.well_name }}</th>
+          <td>{{ well.project }}</td>
+          <td>{{ well.project.project_manager }}</td>
+          <td>{{ well.job_number }}</td>
+          <td><a class="nav-link text-info" href="{% url 'edit-well' well.id %}">Update</a></td> 
+          <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">Detail</a></td> 
+        </tr>
+
+{% endif %}
+{% endfor %} 
+    </tbody>
+  </table>
+
+
+
 </div>
 {% endblock content %}

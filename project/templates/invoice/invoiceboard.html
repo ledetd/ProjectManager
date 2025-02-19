@@ -1,22 +1,65 @@
 {% extends 'base/base.html' %}
 {% block content %}
 <div class="container">
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 mt-4 pt=4">
+        <div class="card">
+            <div class="card-body">
+              <h5>Project Management</h3>
+                <p>${{pm_sum|floatformat:2 }}</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+                        <h5>Engineering</h3>
+                <p>${{engineering_sum|floatformat:2 }}</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+                        <h5>Personnel</h3>
+                <p>${{personnel_sum|floatformat:2 }}</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+                        <h5>Equipment</h3>
+                <p>${{equipment_sum|floatformat:2 }}</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+                        <h5>HERC</h3>
+                <p>${{herc_sum|floatformat:2 }}</p>
+            </div>
+          </div>
+        </div>
+
+
     <div class="d-flex justify-content-end m-4">
       {% if user.is_superuser %}
       <a href="{% url 'add-invoice' %}" class="btn btn-outline-info rounded">+</a>
       {% endif %}
     </div>
+
   <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">Project</th>
           <th scope="col">Well</th>
-          <th scope="col">Inv Date</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Details</th>
-          <th scope="col">Paid</th>
+          <th scope="col">Date</th>
+          <th scope="col">PM</th>
+          <th scope="col">Eng</th>
+          <th scope="col">Crew</th>
+          <th scope="col">Equip</th>
+          <th scope="col">HERC</th>
+          <th scope="col">Daily Total</th>
+         
           <th scope="col"></th>
         </tr>
+
+
+
       </thead>
       <tbody>
   {% for invoice in invoices %}
@@ -24,17 +67,20 @@
           <th scope="row">{{ invoice.project_name }}</th>
           <td>{{ invoice.well_name }}</td>
           <td>{{ invoice.invoice_date }}</td>
-          <td>{{ invoice.invoice_amount|floatformat:2 }}</td>
-          <td>{{ invoice.invoice_reason }}</td>
-          {% if invoice.invoice_paid %}
-          <td>Yes</td>
-          {% else %}
-          <td>No</td>
-          {% endif %}
+          <td>{{ invoice.project_management }}</td>
+          <td>{{ invoice.engineering }}</td>
+          <td>{{ invoice.personnel }}</td>
+          <td>{{ invoice.equipment }}</td>
+          <td>{{ invoice.herc }}</td>
+          <td><strong class="text-success">{{ invoice.total }}</strong></td>
+
+          
+
           <td><a class="nav-link text-info" href="{% url 'edit-invoice' invoice.id %}">Update</a></td> 
         </tr>
   {% endfor %} 
       </tbody>
     </table>
   </div>
+    
 {% endblock content %}

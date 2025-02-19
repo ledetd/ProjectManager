@@ -16,6 +16,9 @@ class Dashboard( View):
 		projects = Project.objects.all()
 		return render(request, 'project/dashboard.html', {'projects': projects})
 	
+class ProjectDetailView( DetailView):
+	model = Project
+	template_name = 'project/project_detail.html'
 
 class AddProject( CreateView):
 	model = Project
@@ -35,7 +38,7 @@ class AddProject( CreateView):
 	
 class Crewboard(  View):
 	def get(self, request):
-		crews = Crew.objects.all().order_by('project', "-job_title", "-on_location",  "location")
+		crews = Crew.objects.all().order_by('project', "-on_location", "-job_title",  "-location")
 		return render(request, 'crew/crewboard.html', {'crews' : crews})
 	
 class CrewDetailView( DetailView):
@@ -65,7 +68,7 @@ class EditCrew( UpdateView):
 
 class Wellboard(  View):
 	def get(self, request):
-		wells = Well.objects.all().order_by('project','-active')
+		wells = Well.objects.all().order_by('-active','project')
 		return render(request, 'wells/wellboard.html', {'wells': wells})
 
 class WellDetailView( DetailView):
@@ -196,7 +199,10 @@ class Dayboard( View):
 		mpd_supervisor_sum = Day.objects.aggregate(total_mpd_supervisor=Sum('mpd_supervisor'))['total_mpd_supervisor'] or 0
 		mpd_operator_sum = Day.objects.aggregate(total_mpd_operator=Sum('mpd_operator'))['total_mpd_operator'] or 0
 
-		return render(request, 'days/dayboard.html', {'days': days, 'lift_sum': lift_sum, 'mmb_sum': mmb_sum, 'rcd_sum': rcd_sum, 'pipework_sum': pipework_sum, 'mpd_supervisor_sum': mpd_supervisor_sum, 'mpd_operator_sum': mpd_operator_sum })
+		supervisor_weather_delay_sum = Day.objects.aggregate(total_supervisor_weather_delay=Sum('supervisor_weather_delay'))['total_supervisor_weather_delay'] or 0
+		operator_weather_delay_sum = Day.objects.aggregate(total_operator_weather_delay=Sum('operator_weather_delay'))['total_operator_weather_delay'] or 0
+
+		return render(request, 'days/dayboard.html', {'days': days, 'lift_sum': lift_sum, 'mmb_sum': mmb_sum, 'rcd_sum': rcd_sum, 'pipework_sum': pipework_sum, 'mpd_supervisor_sum': mpd_supervisor_sum, 'mpd_operator_sum': mpd_operator_sum, 'supervisor_weather_delay_sum': supervisor_weather_delay_sum, 'operator_weather_delay_sum': operator_weather_delay_sum})
 
 class AddDay( CreateView):
 	model = Day
@@ -254,11 +260,18 @@ class Hercboard( View):
 		hercs = Herc.objects.all()
 		return render(request, 'herc/hercboard.html', {'hercs': hercs})
 	
-
+# CHANGED TO REVENUE - REFACTOR THIS CODE
 class Invoiceboard( View):
 	def get(self, request):
-		invoices = Invoice.objects.all()
-		return render(request, 'invoice/invoiceboard.html', {'invoices': invoices})
+		invoices = Invoice.objects.all(). order_by('project_name', 'invoice_date')
+
+		pm_sum = Invoice.objects.aggregate(total_project_management=Sum('project_management'))['total_project_management'] or 0
+		engineering_sum = Invoice.objects.aggregate(total_engineering=Sum('engineering'))['total_engineering'] or 0
+		personnel_sum = Invoice.objects.aggregate(total_personnel=Sum('personnel'))['total_personnel'] or 0
+		equipment_sum = Invoice.objects.aggregate(total_equipment=Sum('equipment'))['total_equipment'] or 0
+		herc_sum = Invoice.objects.aggregate(total_herc=Sum('herc'))['total_herc'] or 0
+
+		return render(request, 'invoice/invoiceboard.html', {'invoices': invoices, 'pm_sum': pm_sum, 'engineering_sum': engineering_sum, 'personnel_sum': personnel_sum, 'equipment_sum': equipment_sum, 'herc_sum': herc_sum})
 	
 class AddInvoice( CreateView):
 	model = Invoice

@@ -4,6 +4,8 @@ from django.forms.fields import DateField
 from . models import Note, Day, Tool, Crew, Well, Spare, Tracker, Project, Invoice
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 
 class NoteForm(forms.ModelForm):
@@ -11,11 +13,11 @@ class NoteForm(forms.ModelForm):
 
 	class Meta:
 		model = Note
-		fields = ['subject', 'note', 'completed']
+		fields = ['subject', 'note', 'day_due', 'completed']
+		widgets = {
+			'day_due': DateInput(),
+		}
 
-
-class DateInput(forms.DateInput):
-    input_type = 'date'
 
 class ProjectForm(forms.ModelForm):
 	projects = forms.ModelChoiceField(queryset=Project.objects.all(), initial=0),
@@ -86,7 +88,7 @@ class InvoiceForm(forms.ModelForm):
 
 	class Meta:
 		model = Invoice
-		fields = [ 'project_name', 'well_name', 'invoice_date', 'invoice_amount', 'invoice_reason', 'invoice_paid']
+		fields = [ 'project_name', 'well_name', 'invoice_date', 'project_management', 'engineering', 'personnel', 'equipment', 'herc']
 		widgets = {
             'invoice_date': DateInput(),
         }

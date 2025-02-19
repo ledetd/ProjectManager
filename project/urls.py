@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.urls import path
-from .views import Index, Dashboard, AddProject, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool,Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay 
+from .views import Index, Dashboard, ProjectDetailView, AddProject, Crewboard, AddCrew, EditCrew, Wellboard, WellDetailView, AddWell, EditWell, Scheduleboard, Toolboard, AddTool, EditTool,Noteboard, AddNote, EditNote, Dayboard, AddDay, EditDay 
 from .views import Spareboard, SpareDetailView, AddSpare, EditSpare, CrewDetailView, DeleteNote, Trackerboard, TrackerDetailView, AddTracker, EditTracker, Hercboard, Invoiceboard, AddInvoice, EditInvoice
 
 
 urlpatterns = [
     path('', Index.as_view(), name='index'),
     path('dashboard/', Dashboard.as_view(), name='dashboard'),
+    path("detail-project/<int:pk>", ProjectDetailView.as_view(), name="detail-project"),
     path('add-project/', AddProject.as_view(), name='add-project'),
 
     path('crewboard/', Crewboard.as_view(), name='crewboard'),

@@ -1,6 +1,65 @@
 {% extends 'base/base.html' %}
 {% block content %}
 <div class="container">
+
+
+
+
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 mt-4 pt=4">
+    <div class="card">
+        <div class="card-body">
+          <h5>MPD</h3>
+            <p>{{ mmb_sum }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>RCD</h3>
+            <p>{{ rcd_sum }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>Pipe</h3>
+            <p>{{ pipework_sum }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>LF</h3>
+            <p>{{ lift_sum }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>Sup</h3>
+            <p>{{ mpd_supervisor_sum }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>Op</h3>
+            <p>{{ mpd_operator_sum }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>SupDel</h3>
+            <p>{{supervisor_weather_delay_sum}}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5>OpDel</h3>
+            <p>{{operator_weather_delay_sum }}</p>
+        </div>
+      </div>
+    </div>
+
+
+
+
   <div class="d-flex justify-content-end m-4">
     {% if user.is_superuser %}
     <a href="{% url 'add-day' %}" class="btn btn-outline-info rounded">+</a>

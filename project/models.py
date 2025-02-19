@@ -168,17 +168,24 @@ class Herc(models.Model):
     def __str__(self):
         return self.crew_member
     
-    
+# CHANGED TO REVENUE - REFACTOR THIS CODE
 class Invoice(models.Model):
     project_name = models.ForeignKey("Project", on_delete=models.CASCADE)
     well_name = models.ForeignKey("Well", on_delete=models.CASCADE)
     invoice_date = models.DateField(auto_now=False)
-    invoice_amount = models.FloatField(default=0)
-    invoice_reason = models.CharField(max_length=5000, null=True, blank=True)
-    invoice_paid = models.BooleanField(default=False)
+    project_management = models.DecimalField(max_digits=8, decimal_places=2)
+    engineering = models.DecimalField(max_digits=8, decimal_places=2)
+    personnel = models.DecimalField(max_digits=8, decimal_places=2)
+    equipment = models.DecimalField(max_digits=8, decimal_places=2)
+    herc = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f'{self.well_name} | {self.invoice_date}'
+    
+    @property
+    def total(self):
+        total = (self.project_management+self.engineering+self.personnel+self.equipment+self.herc)
+        return total
     
 
 # PRAS
