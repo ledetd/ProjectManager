@@ -21,7 +21,8 @@ class Dashboard(TemplateView):
 		context['wells'] = Well.objects.all()
 		context['crews'] = Crew.objects.all()
 		context['tools'] = Tool.objects.all()
-		context['day'] = Day.objects.all()
+		context['days'] = Day.objects.all()
+		context['invoices'] = Invoice.objects.all()
 		
 		return context
 	

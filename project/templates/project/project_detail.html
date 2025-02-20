@@ -6,48 +6,64 @@
 <h3 > Project - {{ project.project_name}}</h3>
 
 <div class="card m-2">
-    <div>Wells</div>
+    <div class="text-uppercase fs-5 m-2">Well</div>
     <div class="card-body">
         {% for well in project.well_set.all %}
-        <div>
-        {{ well.well_name }}
-        </div>
+        {% if well.active %}
+        <div class="text-primary">
+            {{ well.well_name }}
+            </div>
+
+        {% endif %}
         {% endfor %}
     </div>
 </div>
 
 <div class="card m-2">
-    <div>Crew</div>
+    <div class="text-uppercase fs-5 m-2">Crew</div>
     <div class="card-body">
         {% for crew in project.crew_set.all %}
-        <div>
-        {{ crew.first_name }} {{ crew.last_name }}
-        </div>
+        {% if crew.on_location %}
+        <div class="text-success">
+            {{ crew.first_name }} {{ crew.last_name }}
+            </div>
+
+        {% endif %}
         {% endfor %}
     </div>
 </div>
 
 <div class="card m-2">
-    <div>Tools</div>
+    <div class="text-uppercase fs-5 m-2">Tools</div>
     <div class="card-body">
         {% for tool in project.tool_set.all %}
+        {% if tool.tool_used %}
+        <div class="text-danger">
+            {{ tool.tool_number}}
+            </div>
+            {% else %}
         <div>
         {{ tool.tool_number}}
         </div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
 
 <div class="card m-2">
-    <div>Report</div>
+    <div class="text-uppercase fs-5 m-2">Current Operation</div>
     <div class="card-body">
         {% for day in project.day_set.all %}
         <div>
-        {{ day.current_operations}}
+            
+        {{ day.current_operations }}
+       
         </div>
         {% endfor %}
     </div>
 </div>
+
+
 
 
 {% endblock content %}
