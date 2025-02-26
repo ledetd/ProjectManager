@@ -25,18 +25,42 @@ class Well(models.Model):
 
     def __str__(self):
         return self.well_name
+
+class Rate(models.Model):
+    project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
+    well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
+    mpd_supervisor = models.DecimalField(max_digits=6, decimal_places=2)
+    mpd_operator = models.DecimalField(max_digits=6, decimal_places=2)
+    manifold_standby = models.DecimalField(max_digits=6, decimal_places=2)
+    manifold_operational = models.DecimalField(max_digits=6, decimal_places=2)
+    rcd_standby = models.DecimalField(max_digits=6, decimal_places=2)
+    rcd_operational = models.DecimalField(max_digits=6, decimal_places=2)
+    pipe_work_standby = models.DecimalField(max_digits=6, decimal_places=2)
+    pipe_work_operational = models.DecimalField(max_digits=6, decimal_places=2)
+
+    uplift = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    discount = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+
+
+    def __str__(self):
+        return f'{self.project} {self.well_name}'
+    
     
 class Tool(models.Model):
     project = models.ForeignKey("Project", on_delete=models.SET_NULL, null=True)
     tool_name = models.CharField(max_length=500)
     tool_location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
     well_name = models.ForeignKey("Well", on_delete=models.SET_NULL, null=True)
+    well_section = models.CharField(max_length=10, null=True, blank=True)
     tool_number = models.CharField(max_length=500)
     tool_used = models.BooleanField(default=False)
     tool_hours = models.FloatField(blank=True, null=True)
     tool_revolutions = models.FloatField(blank=True, null=True)
     tool_distance = models.FloatField(blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
+
+    class Meta:
+        ordering = ('tool_used','-tool_location')
 
 
     def __str__(self):
@@ -122,6 +146,10 @@ class Day(models.Model):
     mpd_operator  = models.IntegerField(default=2)
     supervisor_weather_delay = models.IntegerField(default=0)
     operator_weather_delay = models.IntegerField(default=0)
+    rate = models.ForeignKey(Rate, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        ordering = ('current_operations',)
 
 
     def __str__(self):
@@ -131,6 +159,7 @@ class Day(models.Model):
     def month(self):
         month = self.day.strftime("%M")
         return month
+    
 
 class Category(models.Model):
     category_name = models.CharField(max_length=50)

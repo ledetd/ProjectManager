@@ -11,7 +11,8 @@
         {% for well in project.well_set.all %}
         {% if well.active %}
         <div class="text-primary">
-            {{ well.well_name }}
+            <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">{{ well.well_name }}</a></td> 
+         
             </div>
 
         {% endif %}
