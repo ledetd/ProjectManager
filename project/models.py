@@ -54,13 +54,14 @@ class Tool(models.Model):
     well_section = models.CharField(max_length=10, null=True, blank=True)
     tool_number = models.CharField(max_length=500)
     tool_used = models.BooleanField(default=False)
+    tool_in_use = models.BooleanField(default=False)
     tool_hours = models.FloatField(blank=True, null=True)
     tool_revolutions = models.FloatField(blank=True, null=True)
     tool_distance = models.FloatField(blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
 
     class Meta:
-        ordering = ('tool_used','-tool_location')
+        ordering = ('-tool_in_use','tool_used','-tool_location')
 
 
     def __str__(self):
@@ -135,7 +136,7 @@ class Day(models.Model):
     current_operations = models.CharField(max_length=5000, null=True, blank=True)
     future_operations = models.CharField(max_length=5000, null=True, blank=True)
     bearing_id = models.CharField(max_length=10, null=True, blank=True)
-    total_rotating_hours = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
+    total_rotating_hours = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
     total_distance_stripped = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
     total_revolutions = models.DecimalField(max_digits=8, decimal_places=1, null=True, blank=True)
     lift_frame = models.IntegerField(default=0)

@@ -12,8 +12,11 @@
         {% if well.active %}
         <div class="text-primary">
             <td><a class="nav-link text-info" href="{% url 'detail-well' well.id %}">{{ well.well_name }}</a></td> 
-         
-            </div>
+         </div>
+{% else %}
+         <div>
+            <td><a class="nav-link text-secondary" href="{% url 'detail-well' well.id %}">{{ well.well_name }}</a></td> 
+         </div>
 
         {% endif %}
         {% endfor %}
@@ -43,7 +46,7 @@
             {{ tool.tool_number}}
             </div>
             {% else %}
-        <div>
+        <div class="text-secondary">
         {{ tool.tool_number}}
         </div>
         {% endif %}
@@ -52,12 +55,11 @@
 </div>
 
 <div class="card m-2">
-    <div class="text-uppercase fs-5 m-2">Current Operation</div>
+    <div class="text-uppercase fs-5 m-2">Operations</div>
     <div class="card-body">
         {% for day in project.day_set.all %}
-        <div>
-            
-        {{ day.current_operations }}
+        <div class="text-secondary">
+        {{day.day}} - {{ day.current_operations }}
        
         </div>
         {% endfor %}

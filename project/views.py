@@ -112,7 +112,7 @@ class Scheduleboard( View):
 
 class Toolboard( View):
 	def get(self, request):
-		tools = Tool.objects.all().order_by('project', 'tool_used', 'tool_name','-tool_location', 'tool_number')
+		tools = Tool.objects.all().order_by('-tool_in_use', 'project', 'tool_used', 'tool_name','-tool_location', 'tool_number')
 		return render(request, 'tools/toolboard.html', {'tools': tools})
 
 class AddTool( CreateView):
