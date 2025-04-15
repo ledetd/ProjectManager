@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DetailView, DeleteView
-from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc, Invoice
+from . models import Project, Well, Tool, Crew, Note, Day, Spare, Tracker, Herc, Invoice, Pipe
 from .forms import NoteForm, DayForm, ToolForm, CrewForm, WellForm, SpareForm, TrackerForm, ProjectForm, InvoiceForm
 from django.utils import timezone
 from django.db.models import Sum
@@ -112,7 +112,7 @@ class Scheduleboard( View):
 
 class Toolboard( View):
 	def get(self, request):
-		tools = Tool.objects.all().order_by('-tool_in_use', 'project', 'tool_used', 'tool_name','-tool_location', 'tool_number')
+		tools = Tool.objects.all().order_by('tool_location', '-tool_used')
 		return render(request, 'tools/toolboard.html', {'tools': tools})
 
 class AddTool( CreateView):
@@ -141,6 +141,11 @@ class Spareboard( View):
 		spares = Spare.objects.all().order_by('-spare_location')
 		return render(request, 'spares/spareboard.html', {'spares': spares})
 
+class Pipeboard( View):
+	def get(self, request):
+		pipes = Pipe.objects.all().order_by('-pipe_od')
+		return render(request, 'pipe/pipeboard.html', {'pipes': pipes})
+	
 class SpareDetailView( DetailView):
 	model = Spare
 	template_name = 'spares/spare_detail.html'

@@ -60,8 +60,8 @@ class Tool(models.Model):
     tool_distance = models.FloatField(blank=True, null=True)
     date_updated = models.DateField(auto_now=True)
 
-    class Meta:
-        ordering = ('-tool_in_use','tool_used','-tool_location')
+    # class Meta:
+    #     ordering = ('project',)
 
 
     def __str__(self):
@@ -193,6 +193,11 @@ class Tracker(models.Model):
     drilledLengthRotating = models.FloatField(default=0, null=True, blank=True)
     drilledLengthSliding = models.FloatField(default=0, null=True, blank=True)
     drilledLengthTotal = models.FloatField(default=0, null=True, blank=True)
+
+class Pipe(models.Model):
+    pipe_od = models.CharField(max_length=500)
+    pipe_sn = models.CharField(max_length=500)
+    pipe_location = models.ForeignKey("Location", on_delete=models.SET_NULL, null=True)
     
 class Herc(models.Model):
     crew_member = models.ForeignKey("Crew", on_delete=models.SET_NULL, null=True)

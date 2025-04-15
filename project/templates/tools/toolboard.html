@@ -37,21 +37,21 @@
           {% if tool.tool_used and tool.tool_hours > 0  %}
           <td class="text-danger">{{tool.tool_hours}}</td>
           {% elif tool.tool_used and tool.tool_hours == 0 %}
-          <td class="text-danger">0.0</td>
+          <td class="text-success">0.0</td>
           {% else %}
           <td class="text-danger">-</td>
           {% endif %}
           {% if tool.tool_used and tool.tool_hours > 0  %}
           <td class="text-danger">{{tool.tool_distance}}</td>
           {% elif tool.tool_used and tool.tool_hours == 0 %}
-          <td class="text-danger">0.0</td>
+          <td class="text-success">0.0</td>
           {% else %}
           <td class="text-danger">-</td>
           {% endif %}
           {% if tool.tool_used and tool.tool_hours > 0  %}
           <td class="text-danger">{{tool.tool_revolutions}}</td>
           {% elif tool.tool_used and tool.tool_hours == 0 %}
-          <td class="text-danger">0.0</td>
+          <td class="text-success">0.0</td>
           {% else %}
           <td class="text-danger">-</td>
           {% endif %}

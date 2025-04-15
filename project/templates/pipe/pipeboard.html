@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="container">
+
+  <div class="d-flex justify-content-end m-4">
+    {% if user.is_superuser %}
+    <a href="#" class="btn btn-outline-info rounded">+</a>
+    {% endif %}
+  </div>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Pipe</th>
+        <th scope="col">SN</th>
+        <th scope="col">Location</th>
+        <th scope="col"></th>
+     
+      </tr>
+    </thead>
+    <tbody>
+
+        {% for pipe in pipes %}
+      <tr >
+        <td scope="row">{{ pipe.pipe_od}} </th>
+        <td>{{ pipe.pipe_sn}} </th>
+        <td>{{ pipe.pipe_location }}</td>
+   
+        <td><a class="nav-link text-info" href="#">Update</a></td> 
+      </tr>
+    
+      {% endfor %} 
+       
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
